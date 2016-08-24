@@ -1,21 +1,5 @@
 Mudar as cores
 
-- Branco - Não informado
-- Vermelho - Não e é primordial
-- Laranja - Quando estiver vencendo
-- Cinza - Não tem e não precisa
-- Amarelo - Tem mais ainda não foi digitalizado
-- Verde - Tem e está digitalizado
-
-- Identificação para documento que foi retia
-
-- Adicionar um campo de observação
-
-
-- Retirado por "Nome completo e comum"
-
-- Criar "sinais" no documento (idéia)
-
 - Subir mais que um arquivo (attachment) no mesmo documento
 
 - 	- O 3.2 ART da anexação

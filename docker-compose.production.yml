@@ -5,8 +5,8 @@ services:
     container_name: ccbadm-db
     user: "root"
     volumes:
-    #   - /mnt/disk2/ccbadm:/var/lib/postgresql/data/pgdata
-      - /data/ccbadm-db:/var/lib/postgresql/data/pgdata
+      - /mnt/disk2/ccbadm:/var/lib/postgresql/data/pgdata
+      # - /data/ccbadm-db:/var/lib/postgresql/data/pgdata
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - PGUSER=postgres
@@ -17,7 +17,7 @@ services:
     image: memcached
     container_name: ccbadm-cache
   api:
-    image: jesse1983/ccbadm-api:1.0.2
+    image: jesse1983/ccbadm-api:latest
     command: bundle exec puma -C config/puma.rb
     # command: bundle exec rails s
     container_name: ccbadm-api
@@ -34,3 +34,5 @@ services:
     depends_on:
       - db
       - cache
+    stdin_open: true
+    tty: true
