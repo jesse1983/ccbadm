@@ -1,0 +1,38 @@
+.datepicker {
+  background-color: #FFF !important;
+  border: 2px solid #bdc3c7 !important;
+  border-radius: 4px !important;
+  margin-top: 2px !important; }
+  .datepicker.datepicker-orient-top:after, .datepicker.datepicker-orient-top:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none; }
+  .datepicker.datepicker-orient-top:after {
+    border-color: transparent;
+    border-top-color: #FFF;
+    border-width: 8px;
+    margin-left: -8px; }
+  .datepicker.datepicker-orient-top:before {
+    border-top: 2px solid #bdc3c7;
+    border-width: 10px;
+    margin-left: -10px; }
+  .datepicker table {
+    width: 100%; }
+    .datepicker table thead tr td, .datepicker table thead tr th {
+      text-align: center !important;
+      font-weight: 900 !important; }
+      .datepicker table thead tr td:hover, .datepicker table thead tr th:hover {
+        background: #EEE;
+        cursor: pointer; }
+    .datepicker table tbody td, .datepicker table tbody th {
+      text-align: center !important; }
+      .datepicker table tbody td:hover, .datepicker table tbody th:hover {
+        background: #EEE;
+        cursor: pointer; }
+      .datepicker table tbody td.old.day, .datepicker table tbody th.old.day {
+        color: #DDD; }

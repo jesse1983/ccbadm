@@ -1,0 +1,35 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://ccbadm.com.br/api/",
+  "resourcePath": "users",
+  "apis": [
+    {
+      "path": "api/churches/{church_id}/users.json",
+      "operations": [
+        {
+          "summary": "List all users",
+          "notes": "This lists all the active users",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "responseMessages": [
+            {
+              "code": 200,
+              "responseModel": "User",
+              "message": "Success"
+            }
+          ],
+          "method": "get",
+          "nickname": "Api::Users#index"
+        }
+      ]
+    }
+  ]
+}

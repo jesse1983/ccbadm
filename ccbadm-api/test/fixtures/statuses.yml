@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: statuses
+#
+#  uid             :string           not null, primary key
+#  statusable_type :string           not null
+#  title           :string           not null
+#  color           :string
+#  is_active       :boolean
+#  description     :string
+#  order           :integer
+#  meta            :json
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  color: MyString
+  is_active: MyString
+  description: MyString
+
+two:
+  title: MyString
+  color: MyString
+  is_active: MyString
+  description: MyString

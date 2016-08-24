@@ -1,0 +1,37 @@
+
+<div>
+  <h1 ng-show="!ready" class="text-center"><i class="fa fa-cog fa-spin fa-5"></i></h1>
+  <div ng-show="ready" class="loaded">
+    <ng-include src="'controllers/properties/_header_property.html'"></ng-include>
+    <articles>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Documentos</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div ng-repeat="status in GetStatuses()" ng-if="status.documents.length &gt; 0 " class="col-xs-12">
+            <h4 ng-bind="status.title + ' (' + status.documents.length + ')' "></h4>
+            <div class="row">
+              <div ng-repeat="document in status.documents | orderBy:document_type.order" ng-click="gotoDocument(property,document.id)" style="cursor: pointer" class="col-xs-12">
+                <div class="tile">
+                  <div class="media">
+                    <div class="media-right pull-right documents-icons hidden-xs"><i ng-class="{inactive: document.attachments_count &lt; 1}" class="fa fa-paperclip"></i><i ng-class="{inactive: document.comments_count &lt; 1}" class="fa fa-comments-o"></i><i ng-class="{inactive: document.active_requests_count &lt; 1}" class="fa fa-exchange"></i></div>
+                    <div style="min-width: 90px" class="media-left"><span ng-bind="document.document_type.code" style="font-size: 36px" class="dc_code"></span></div>
+                    <div class="media-body text-left">
+                      <div><strong ng-bind="document.document_type.short_name" class="dc_short_name"></strong></div>
+                      <div ng-style="{'background-color': status.color}" ng-bind="status.title" class="label"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr/>
+          </div>
+          <div class="col-xs-12 text-center"><a href="/#/properties/{{property.id}}/print" class="btn btn-default">Imprimir capa</a></div>
+        </div>
+      </div>
+    </articles>
+  </div>
+</div>

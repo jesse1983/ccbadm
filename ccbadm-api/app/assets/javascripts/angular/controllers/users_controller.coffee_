@@ -1,0 +1,9 @@
+angular.module('CCBApp').controller "UsersFormController", ['$scope','CoreFactory',($scope,CoreFactory) ->
+	$scope.churches = []
+	$scope.$watch "user.group_id", (n,o) ->
+		$scope.churches = []
+		if $scope.user.group_id?
+			CoreFactory.churches.query {group_id: $scope.user.group_id},(response) ->
+				$scope.churches = response
+
+]

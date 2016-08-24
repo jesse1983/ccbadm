@@ -1,0 +1,70 @@
+//- #  requested_at           :datetime
+//- #  returned_at            :datetime
+//- #  return_in              :datetime
+//- #  is_active              :boolean
+//- #  user_id                :integer
+//- #  requestable_type       :text
+//- #  requestable_id         :integer
+//- #  requester              :text
+//- #  requester_phone_number :text
+//- #  created_at             :datetime
+//- #  updated_at             :datetime
+
+
+.container.container-bar
+	.row
+		form#form.col-sm-6.col-sm-offset-3(name="vm.form" ng-submit="vm.Save()")
+			//- .form-group(ng-if="vm.CurrentUser")
+			//- 	label Cadastrado por
+			//- 	.form-control-static(ng-bind="vm.CurrentUser()")
+			.form-group(ng-class="{'has-error':vm.form.requester.$invalid && vm.submitted}")
+				label Responsável (retirado por)
+				input.form-control(type="text" name="requester" ng-model="vm.request.requester" placeholder="Nome do responsável" required )
+			.form-group(ng-class="{'has-error':vm.form.requester_church.$invalid && vm.submitted}")
+				label Comum do responsável
+				input.form-control(type="text" name="requester_church"  ng-model="vm.request.requester_church" placeholder="Comum do responsável"  required)
+			.form-group(ng-class="{'has-error':vm.form.requester_phone_number.$invalid && vm.submitted}")
+				label Telefone do responsável
+				input.form-control(type="text" name="requester_phone_number" ng-model="vm.request.requester_phone_number"  placeholder="Telefone do responsável"  required)
+			.form-group
+				.row
+					.col-sm-6(ng-class="{'has-error':vm.form.requested_at.$invalid && vm.submitted}")
+						label Retirado em
+						input.form-control(type="text" name="requested_at" ng-model="vm.request.requested_at" placeholder="__/__/____" required ng-datepicker options="{autoclose: true, todayHighlight: true}")
+					.col-sm-6(ng-class="{'has-error':vm.form.return_in.$invalid && vm.submitted}")
+						label Agendar entrega para
+						input.form-control(type="text" name="return_in"  ng-model="vm.request.return_in" placeholder="__/__/____" required ng-datepicker options="{autoclose: true, todayHighlight: true}")
+			hr
+			.form-group
+				.row
+					.col-sm-6
+						.form-group(ng-class="{'has-error':vm.form.church_id.$invalid && vm.submitted}")
+							label Escolha a casa de oração
+							select.form-control(name="church_id" ng-disabled="!vm.churches" ng-model="vm.church_id" ng-options="church.id as church.name for church in vm.churches" ng-change="vm.GetProperties(vm.church_id)")
+								option(value="") Casa de oração
+							small.help-block(ng-if="vm.loading == 'churches'")
+								i.fa.fa-cog.fa-spin
+								|  carregando...
+					.col-sm-6
+						.form-group(ng-class="{'has-error':vm.form.property_id.$invalid && vm.submitted}")
+							label Escolha o imóvel
+							select.form-control(name="property_id" ng-disabled="!vm.properties" ng-model="vm.property_id" ng-options="property.id as property.title for property in vm.properties" ng-change="vm.GetDocuments(vm.property_id)")
+								option(value="") Imóvel
+							small.help-block(ng-if="vm.loading == 'properties'")
+								i.fa.fa-cog.fa-spin
+								|  carregando...
+				.row
+					.col-sm-12
+						.form-group(ng-class="{'has-error':vm.form.requestable_id.$invalid && vm.submitted}")
+							label Escolha do documento
+							select.form-control(name="requestable_id" ng-disabled="!vm.documents" ng-model="vm.request.requestable_id" ng-options="document.id as document.document_type.title for document in vm.documents" required)
+								option(value="") Documento
+							small.help-block(ng-if="vm.loading == 'documents'")
+								i.fa.fa-cog.fa-spin
+								|  carregando...
+
+			.form-group(ng-class="{'has-error':vm.form.comment.$invalid && vm.submitted}")
+				label Observações
+				textarea.form-control(type="text" name="comment" ng-model="vm.request.comment" rows="10")
+			p
+

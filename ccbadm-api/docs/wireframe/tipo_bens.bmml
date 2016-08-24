@@ -1,0 +1,20 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="542" measuredH="397" mockupW="481" mockupH="343">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::DataGrid" x="67" y="123" w="475" h="207" measuredW="228" measuredH="141" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2213%2C97%2C56.48486328125%2C110%22%20href%3D%22bens.bmml%22%20alt%3D%22Bancos%22%20id%3D%220%22/%3E</map>
+        <text>Tipo%20do%20bem%2C%20Quantidade%2C%20S/%20Nota%0A%5BBancos%5D%28bens%29%2C%2040%2C%2010%0AMicrofones%2C%2010%2C%2010%0AVentiladores%2C%2030%2C%200%0A%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Title" x="61" y="54" w="-1" h="-1" measuredW="418" measuredH="43" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tipos%20de%20bens%20-%20Bonfim</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Button" x="67" y="355" w="143" h="42" measuredW="110" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Adicionar%20bens</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

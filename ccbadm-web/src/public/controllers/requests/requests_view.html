@@ -1,0 +1,62 @@
+
+<div class="container container-bar">
+  <h1 ng-show="vm.loading" class="text-center"><i class="fa fa-cog fa-spin fa-5"></i></h1>
+  <div ng-if="vm.requests_total == 0" class="text-center">
+    <h3>Não há nenhuma retirada pendente</h3>
+    <p><a href="#/requests/new">Clique aqui para cadastrar</a></p>
+  </div>
+  <div ng-if="vm.requests_total &gt; 0">
+    <h4>Há<span ng-bind="' ' + vm.requests_total + ' '"></span><span ng-if="vm.requests_total == 1">documento retirado</span><span ng-if="vm.requests_total != 1">documentos retirados</span></h4>
+    <div class="row">
+      <div style="cursor: pointer" ng-repeat="request in vm.requests.data" ng-click="vm.OpenRequest(request)" ng-if="request.is_active" class="col-sm-12">
+        <div class="tile media">
+          <div style="font-size: 40px; padding: 10px 20px 10px 10px" class="media-left"><i class="fa fa-file-text-o"></i></div>
+          <div class="media-body text-left">
+            <div ng-if="request.is_expired" class="label label-danger">Expirado</div>
+            <h1 ng-bind="request.meta.church.name  + ' ' + request.meta.property.code " class="tile-title"></h1>
+            <h2 ng-bind="request.meta.document_type.title" class="tile-title"></h2><br/>
+            <p>Retirado há<code am-time-ago="request.requested_at"></code>por<code ng-bind="request.requester"></code><br/>Devolver até<code ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'"></code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <paginalize object="vm.requests" method="vm.GetRequests"></paginalize>
+    <script type="text/ng-template" id="modal.html">
+      <div class="modal-header">
+        <h3 ng-bind="request.meta.document_type.title" class="modal-title"></h3>
+      </div>
+      <div class="modal-body">
+        <h4>Responsável</h4>
+        <hr/>
+        <dl class="dl-horizontal">
+          <dt>Nome</dt>
+          <dd ng-bind="request.requester"></dd>
+          <dt>Comum</dt>
+          <dd ng-bind="request.requester_church"></dd>
+          <dt>Telefone</dt>
+          <dd ng-bind="request.requester_phone_number"></dd>
+          <dt>Cadastrado por</dt>
+          <dd ng-bind="request.user.first_name + ' ' + request.user.last_name"></dd>
+          <dt ng-if="request.comment">Obs:</dt>
+          <dd ng-if="request.comment" ng-bind="request.comment"></dd>
+        </dl>
+        <h4>Documento</h4>
+        <hr/>
+        <dl class="dl-horizontal">
+          <dt>Documento</dt>
+          <dd ng-bind="request.meta.document_type.title"></dd>
+          <dt>Código Brás</dt>
+          <dd ng-bind="request.meta.property.code"></dd>
+          <dt>Casa de oração</dt>
+          <dd ng-bind="request.meta.church.name"></dd>
+          <dt>Devolver em</dt>
+          <dd ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'"></dd>
+        </dl>
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="GetBackRequest()" class="btn btn-primary">Marcar como entregue</button>
+        <button type="button" ng-click="ModalCancel()" class="btn btn-default">Fechar</button>
+      </div>
+    </script>
+  </div>
+</div>

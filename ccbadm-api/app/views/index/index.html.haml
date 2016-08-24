@@ -1,0 +1,83 @@
+/ !!!
+/ %html{ng:{app:"CCBApp"}}
+/   %head{ng:{controller:"HeadController"}}
+/     %title{ng:{bind:"title"}}
+/     %meta{charset: "utf-8"}/
+/     %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+/     %meta{content: "yes", name: "apple-mobile-web-app-capable"}/
+/     %meta{content: "", name: "description"}/
+/     = stylesheet_link_tag    "application", media: "all"
+/     %link{href:"#{asset_path('icon-'+Rails.env+'.png')}",rel:'shortcut icon'}
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-57x57.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "57x57"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-114x114.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "114x114"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-72x72.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "72x72"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-144x144.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "144x144"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-60x60.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "60x60"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-120x120.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "120x120"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-76x76.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "76x76"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/apple-touch-icon-152x152.png')}", :rel => "apple-touch-icon-precomposed", :sizes => "152x152"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/favicon-196x196.png')}", :rel => "icon", :sizes => "196x196", :type => "image/png"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/favicon-96x96.png')}", :rel => "icon", :sizes => "96x96", :type => "image/png"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/favicon-32x32.png')}", :rel => "icon", :sizes => "32x32", :type => "image/png"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/favicon-16x16.png')}", :rel => "icon", :sizes => "16x16", :type => "image/png"}/
+/     %link{:href => "#{asset_path('favicomatic/'+Rails.env+'/favicon-128.png')}", :rel => "icon", :sizes => "128x128", :type => "image/png"}/
+/     %meta{content:"CCB ADM", :name => "application-name"}/
+/     %meta{content:"#34495e", :name => "msapplication-TileColor"}/
+/     %meta{content:"#{asset_path('favicomatic/'+Rails.env+'/mstile-144x144.png')}", :name => "msapplication-TileImage"}/
+/     %meta{content:"#{asset_path('favicomatic/'+Rails.env+'/mstile-70x70.png')}", :name => "msapplication-square70x70logo"}/
+/     %meta{content:"#{asset_path('favicomatic/'+Rails.env+'/mstile-150x150.png')}", name:"msapplication-square150x150logo"}/
+/     %meta{content:"#{asset_path('favicomatic/'+Rails.env+'/mstile-310x150.png')}", name:"msapplication-wide310x150logo"}/
+/     %meta{content:"#{asset_path('favicomatic/'+Rails.env+'/mstile-310x310.png')}", name:"msapplication-square310x310logo"}/
+/     %meta{content:"black-translucent",name:"apple-mobile-web-app-status-bar-style"}
+
+/     = javascript_include_tag "application"
+/     = javascript_include_tag "http://maps.googleapis.com/maps/api/js?sensor=false"
+/   %body{ng:{controller:"NavController"}}
+/     %header.vertical.hidden-print{ng:{show: "$root.login && menuOpened"}}
+/       .container-fluid.left-nav
+/         .row
+/           %nav.nav.nav-stacked.navbar-inverse.left-nav.col-xs-12.col-sm-4.col-md-3.nga-fast.nga-stagger.nga-slide-up{role:"navigation",ng:{show: "$root.login && menuOpened"}}
+/             .navbar-login
+/               %button.close{type:"button",ng:{click:"menuOpened = null"}}
+/                 %span &times;
+/               %span{ng:{bind:"$root.login.first_name + ' ' + $root.login.last_name"}}
+/             %ul.nav
+/               %li
+/                 %a{href:"/#/properties",ng:{click:"menuOpened = null"}} Imóveis
+/               %li{ng:{show: "$root.can('read','User')"}}
+/                 %a{href:"/#/users",ng:{click:"menuOpened = null"}} Usuários
+/               %li
+/                 %a{href:"/#/logout",ng:{click:"menuOpened = null"}} Sair do CCB ADM
+/           .right-nav.hidden-xs.col-sm-8.col-md-9{ng:{click:"menuOpened = null"}}
+
+/     %header.horizontal.hidden-print{ng:{show: "$root.login"}}
+/       %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
+/         .nga-fast.nga-stagger.nga-rotate-down{ng:{hide:"showSearch"}}
+/           %ul.nav.navbar-nav.navbar-left.pull-left
+/             %li{ng:{show:"!$root.nav.back"}}
+/               %a{href:"javascript:;",ng:{click:"menuOpened = true"}}
+/                 %i.fa.fa-bars
+/             %li{ng:{show:"$root.nav.back"}}
+/               %a{href:"/#/{{$root.nav.back.url}}"}
+/                 %i.fa.fa-chevron-left
+/                 %span.hidden-xs
+/                   {{$root.nav.back.title}}
+/           %ul.nav.navbar-nav.navbar-right.pull-right
+/             %li{ng:{show:"!$root.nav.button"}}
+/               %a{href:"javascript:",ng:{click:"showSearch = true"}}
+/                 %i.fa.fa-search
+/             %li{ng:{show:"$root.nav.button"}}
+/               %a{href:"javascript:",ng:{click:"$root.nav.button.action()",bind:"$root.nav.button.label"}}
+
+/           .navbar-brand{ng:{bind:"$root.nav.current.title"}}
+/         .nga-fast.nga-stagger.nga-rotate-up{ng:{show:"showSearch"}}
+/           %form.form-search{:role => "search", name:"formSearch",novalidate:true, ng:{submit:"submitSearch(formSearch.$valid)"}}
+/             .form-group
+/               .input-group
+/                 %input.form-control{:placeholder => "Buscar imóvel", :type => "search", maxlength: "64",required:true, ng:{model:"formSearch.q",blur:"showSearch = false"}}/
+/                 %span.input-group-btn
+/                   %button.btn{:type => "submit"}
+/                     %span.fa.fa-search
+/                   %button.btn{ng:{click:"showSearch = false"}} 
+/                     %span.fa.fa-times
+/     .content.nga-fast.nga-stagger.nga-squash-left{"ng-view"=>true}

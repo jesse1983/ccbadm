@@ -1,0 +1,32 @@
+h4 Responsável
+hr
+dl.dl-horizontal
+	dt Nome
+	dd(ng-bind="request.requester")
+
+	dt Comum
+	dd(ng-bind="request.requester_church")
+
+	dt Telefone
+	dd(ng-bind="request.requester_phone_number")
+
+	dt Cadastrado por
+	dd(ng-bind="request.user.first_name + ' ' + request.user.last_name")
+
+	dt(ng-if="request.comment") Obs:
+	dd(ng-if="request.comment" ng-bind="request.comment")
+
+h4 Documento
+hr
+dl.dl-horizontal
+	dt Documento
+	dd(ng-bind="request.meta.document_type.title")
+
+	dt Código Brás
+	dd(ng-bind="request.meta.property.code")
+
+	dt Casa de oração
+	dd(ng-bind="request.meta.church.name")
+
+	dt Devolver em
+	dd(ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'")

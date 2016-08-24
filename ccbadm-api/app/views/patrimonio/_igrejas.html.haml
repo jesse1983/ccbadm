@@ -1,0 +1,22 @@
+.col-sm-12
+	.page-header
+		%h1 
+			Igrejas
+			%small
+				Relação de igrejas 
+	%table.table.table-bordered
+		%thead
+			%tr
+				%th
+					Igrejas
+				%th{"data-toggle"=>"tooltip",title:"{{doc.name}}", nowrap: true, ng:{repeat:"doc in tags",bind:"doc.name.split(' ')[0]"}}	
+			%tr
+				%th{colspan:"{{tags.length + 1}}"}
+					%input.form-control{ng:{model:"searchChurch"}}
+		%tbody
+			%tr{"ng-repeat" => "card in cards | orderBy:name | filter:{name:searchChurch, column: search.status}"}
+				%th{nowrap: true, "ng-bind" => "card.name"}
+				%td{ng:{repeat:"doc in tags",class:"{active: (card.tags.indexOf(doc.name) > -1) }"}}
+					%span.label.label-success{ng:{show:"card.tags.indexOf(doc.name) > -1"}} 
+						OK
+						

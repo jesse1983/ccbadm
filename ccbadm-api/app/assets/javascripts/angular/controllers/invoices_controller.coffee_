@@ -1,0 +1,94 @@
+angular.module('CCBApp').controller "InvoicesController", ['$scope','CoreFactory','$http',($scope,CoreFactory,$http) ->
+	$scope.invoice = new Object()
+	$scope.church = new Object()
+	$scope.invoice.good_ids = []
+	$scope.values = [false,true]
+
+	$scope.begin = ()->
+		$scope.searching = true
+
+		CoreFactory.goods($scope.invoice.church_id).query {},(response) ->
+			$scope.goods = response
+			for x of $scope.goods
+				$scope.goods[x].edit = ($scope.goods[x].value == null)
+				$scope.goods[x].selected = false
+				$scope.goods[x].this_invoice = false
+				for i of $scope.invoice.good_ids
+					if $scope.invoice.good_ids[i] == $scope.goods[x].id
+						$scope.goods[x].this_invoice = true 
+						$scope.goods[x].has_invoice = true 
+			$scope.searching = false
+
+
+	$scope.selectAll = () ->
+		for x of $scope.goods
+			if $scope.goods[x].this_invoice
+				$scope.goods[x].selected = $scope.select_all
+
+	$scope.AddItem = (item) ->
+		item.this_invoice = true
+		item.has_invoice = true
+		item.selected = false
+		$scope.invoice.good_ids.push item.id
+		$scope.invoice.good_ids_s = $scope.invoice.good_ids.join(",")
+		return
+	$scope.RmvItem = (item) ->
+		item.this_invoice = false
+		item.has_invoice = false
+		item.selected = false
+		index = $scope.invoice.good_ids.indexOf(item.id)
+		$scope.invoice.good_ids.splice(index, 1) if index > -1
+		$scope.invoice.good_ids_s = $scope.invoice.good_ids.join(",")
+		return
+	$scope.removeSelected = (this_invoice)->
+		for i of $scope.goods
+			if $scope.goods[i].selected == true
+				unless this_invoice 
+					$scope.RmvItem $scope.goods[i]
+				else
+					$scope.AddItem $scope.goods[i]
+		return
+	$scope.saveSelected = () ->
+		for i of $scope.goods
+			if $scope.goods[i].selected == true
+				$scope.goods[i].value = $scope.values[true]
+				$scope.goods[i].selected = false
+				$scope.saveGood $scope.goods[i]
+
+
+	$scope.saveGood = (item) ->
+		item.disableEdit = true
+		config = 
+			headers: {'X-CSRF-Token':$("meta[name='csrf-token']").attr("content")}
+
+		$http
+			.put "/churches/#{$scope.invoice.church_id}/goods/#{item.id}",{value:item.value}, config
+			.success ->
+				item.edit = false
+				item.disableEdit = false
+				$scope.select_all = false
+			.error ->
+				item.edit = false
+				item.disableEdit = false
+				$scope.select_all = false	
+		return
+
+	$scope.groups = () ->
+		indexedGroups = []
+		if $scope.goods
+			for i of $scope.goods
+				if indexedGroups.indexOf($scope.goods[i].name) == -1 && $scope.goods[i].this_invoice == false
+					indexedGroups.push $scope.goods[i].name
+		indexedGroups
+	$scope.addGroupName = (group) ->
+		for i of $scope.goods
+			if $scope.goods[i].name == group && $scope.goods[i].this_invoice == false
+				$scope.AddItem $scope.goods[i]
+		return
+
+
+
+]
+
+
+

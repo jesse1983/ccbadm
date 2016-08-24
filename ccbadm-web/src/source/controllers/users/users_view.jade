@@ -1,0 +1,15 @@
+.container-fluid.container-bar
+  h1.text-center(ng-show='!users')
+    i.fa.fa-cog.fa-spin.fa-5
+  articles(ng-show='users')
+    .row.demo-tiles.tiles-users
+      .col-sm-3.nga-fast.nga-stagger.nga-squash-vertical(ng-repeat='user in users.data', ng-click='goto(user.id)')
+        .palette-item
+          .palette.palette-belize-hole
+            .media
+              .media-left
+                i.fa.fa-user
+              .media-body
+                h6.media-heading(ng-bind="user.first_name + ' ' + user.last_name")
+                p(ng-bind='user.profile.name')
+    paginalize(object='users', method='getUsers')

@@ -1,0 +1,46 @@
+.col-sm-12
+	.page-header
+		%h1 
+			Documentos
+			%small
+				Relação de documentos
+
+	.div
+		.div.columns-panel{ng:{class:"{'col-sm-8': doc, 'col-sm-12': doc == null}"}}
+			%table.table
+				%thead
+					%tr
+						%th
+							Documentos
+						%th
+							Total:
+							{{(cards | filter:{column: search.status}).length}}
+						%th{width: "1%"}
+						%th{width: "1%"}
+				%tbody
+					%tr{ng: {repeat:"tag in tags",class:"{info: doc.name == tag.name}"}}
+						%th{"ng-bind" => "tag.name",width: "20%"}
+
+						%td
+							.progress{style: "margin: 0"}
+								.progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "{{getPercent(tag)}}", :role => "progressbar", :style => "width: {{getPercent(tag)}}%;"}
+						%td{width: '1%'}
+							%small{ng:{bind:"(tag.cards | filter:search).length + '(' + getPercent(tag) + '%)'"}}
+
+						%td
+							%a.btn.btn-primary{href:"javascript:",ng:{click:"openDetails(tag)",class:"{disabled: doc.name == tag.name}"}} Detalhes
+		.div.columns-panel{ng:{class:"{'col-sm-4': doc}",show:"doc"}}
+			.panel.panel-default
+				.panel-heading
+					%span{ng:{bind: "doc.name"}}
+					%span.label.label-danger{ng:{bind:"(cardsMissing(doc,search.status) | filter:{column: search.status}).length"}}
+					%button.close{:type => "button",ng:{click:"doc = null"}}
+						%span{"aria-hidden" => "true"} ×
+						%span.sr-only Close			
+
+				.panel-body
+					%ol
+						%li{ng:{repeat:"card in cardsMissing(doc) | filter:{column: search.status}",bind: "card.name"}} 
+
+
+					

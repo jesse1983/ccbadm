@@ -1,0 +1,44 @@
+div
+  h1.text-center(ng-show='!document')
+    i.fa.fa-cog.fa-spin.fa-5
+  div(ng-show='document.document_type')
+    ng-include(src="'controllers/properties/_header_property.html'")
+    .container
+      h3
+        a(href='javascript:', ng-click='prevDocument()', ng-show="hasNavDocument('prev')")
+          i.fa.fa-chevron-left
+        span(ng-bind='document.document_type.title')
+        a(href='javascript:', ng-click='nextDocument()', ng-show="hasNavDocument('prev')")
+          i.fa.fa-chevron-right
+      form
+        .row
+          .col-sm-8
+            .form-group
+              label Disponibilidade
+              .radio
+                label.checkbox
+                  input#is_active_1(type='checkbox', name='is_active', ng-model='document.is_active', ng-true-value='true', ng-false-value='false')
+                  | Disponível
+                label.checkbox(ng-hide='document.is_active')
+                  input#is_possible_1(type='checkbox', name='is_possible', ng-model='document.is_possible', ng-true-value='false', ng-false-value='true', ng-disabled='document.is_active')
+                  | Esse documento é impossível adquirir ou não é necessário
+            .form-group(ng-show='document.is_active && document.document_type.is_expirable')
+              label Documento expira em
+              input.form-control(type='date', ng-model='document.expire_at')
+          .col-sm-4
+            .form-group(ng-show='document.is_active')
+              div(ng-show="document.attachments.length < 1 && $root.can('create','Attachment')")
+                .drop-box.palette.palette-clouds(ngf-drop='', ngf-select='', ng-model='files', ngf-drag-over-class='dragover', ngf-allow-dir='true', ngf-accept="'.jpg,.png,.pdf'", style='height: 480px; padding-top: 200px')
+                  span(ng-show='!upl')
+                    | Clique ou arraste
+                    br
+                    | os arquivos aqui
+                  span(ng-show='upl', ng-bind='upl.percent')
+                div(ngf-no-file-drop='') Não é possível subir arquivos nesse browser
+              .text-center(ng-show='document.attachments.length > 0', ng-repeat='attachment in document.attachments')
+                img.img-responsive.img-rounded(cloudinary='w_400,h_500,c_fill', cl-src='{{attachment.attachment}}', height='500')
+                a.btn.btn-primary(href='{{attachment.attachment}}', download='') Download
+                button.btn.btn-danger(ng-click='destroyAttach(attachment)', ng-show="$root.can('destroy','Attachment')")
+                  i.fa.fa-times
+        .row
+          button.btn.btn-default.btn-lg(type='submit', ng-click='save(document)', ng-show="$root.can('update','Document')") Salvar

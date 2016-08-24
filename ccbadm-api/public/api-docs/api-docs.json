@@ -1,0 +1,18 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "http://ccbadm.com.br/api/",
+  "apis": [
+    {
+      "path": "api/users.{format}",
+      "description": "User Management"
+    }
+  ],
+  "info": {
+    "title": "CCB ADM",
+    "description": "API Doc",
+    "contact": "jesse.pinheiro@congregacao.org.br",
+    "license": "Apache 2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }
+}

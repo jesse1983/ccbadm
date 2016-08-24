@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "CoreSansNR";
+  src: url(/assets/fonts/CoreSansNR15.eot);
+  src: url(/assets/fonts/CoreSansNR15.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/CoreSansNR15.woff) format("woff"), url(/assets/fonts/CoreSansNR15.ttf) format("truetype"), url(/assets/fonts/CoreSansNR15.svg#CoreSansNR) format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "CoreSansNR";
+  src: url(/assets/fonts/CoreSansNR35.eot);
+  src: url(/assets/fonts/CoreSansNR35.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/CoreSansNR35.woff) format("woff"), url(/assets/fonts/CoreSansNR35.ttf) format("truetype"), url(/assets/fonts/CoreSansNR35.svg#CoreSansNR) format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "CoreSansNR";
+  src: url(/assets/fonts/CoreSansNR55.eot);
+  src: url(/assets/fonts/CoreSansNR55.eot?#iefix) format("embedded-opentype"), url(/assets/fonts/CoreSansNR55.woff) format("woff"), url(/assets/fonts/CoreSansNR55.ttf) format("truetype"), url(/assets/fonts/CoreSansNR55.svg#CoreSansNR) format("svg");
+  font-weight: 700;
+  font-style: normal; }

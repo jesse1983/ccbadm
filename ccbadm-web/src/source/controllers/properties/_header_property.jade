@@ -1,0 +1,8 @@
+header.property-box(style='background-image: -webkit-linear-gradient(bottom, rgba(52,73,94,1) 0%, rgba(52,73,94,0.7) 50%, rgba(52,73,94,0.5) 100%),url({{property.church.picture}})')
+  .container
+    .col-xs-12
+      .qr-property.visible-print-block
+        qrcode(data='{{url}}', href='{{url}}', download='', size='100', level='2')
+      .info-property
+        h1(ng-bind='property.title')
+        h2(ng-bind="property.church.name + ' (' + property.code + ')'")

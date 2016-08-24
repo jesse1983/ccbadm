@@ -1,0 +1,5 @@
+{
+  "name": "CCB Online API",
+  "description": "An example app.json for heroku-docker",
+  "image": "heroku/ruby"
+}

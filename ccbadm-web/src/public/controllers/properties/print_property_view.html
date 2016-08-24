@@ -1,0 +1,82 @@
+
+<div>
+  <h1 ng-show="!ready" class="text-center hidden-print"><i class="fa fa-cog fa-spin fa-5"></i></h1>
+  <div ng-show="ready" class="loaded">
+    <ng-include src="'controllers/properties/_header_property.html'"></ng-include>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-6">
+          <h5>Códigos</h5>
+          <div class="details-group">
+            <h6><small class="details-label">Antigo</small>
+              <div ng-bind="property.accountant_code" class="details-info"></div>
+            </h6>
+          </div>
+          <div class="details-group">
+            <h6><small class="details-label">Cartográfico</small>
+              <div ng-bind="property.cartographic_code" class="details-info"></div>
+            </h6>
+          </div>
+          <div class="details-group">
+            <h6><small class="details-label">IPTU</small>
+              <div ng-bind="property.tax_code" class="details-info"></div>
+            </h6>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <h5>Áreas</h5>
+          <div ng-show="property.main_area" class="details-group">
+            <h6><small class="details-label">Principal</small>
+              <div ng-bind="property.main_area" class="details-info"></div>
+            </h6>
+          </div>
+          <div ng-show="property.terrain_area" class="details-group">
+            <h6><small class="details-label">Terreno</small>
+              <div ng-bind="property.terrain_area" class="details-info"></div>
+            </h6>
+          </div>
+          <div ng-show="property.secondary_area" class="details-group">
+            <h6><small class="details-label">Dependência</small>
+              <div ng-bind="property.secondary_area" class="details-info"></div>
+            </h6>
+          </div>
+          <div ng-show="property.width_area" class="details-group">
+            <h6><small class="details-label">Testada</small>
+              <div ng-bind="property.width_area" class="details-info"></div>
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h3>Documentos</h3>
+        </div>
+        <div ng-repeat="column in [0,1,2]" class="col-xs-4">
+          <ul class="list-unstyled">
+            <li ng-repeat="document in documents" ng-if="range($index,column)"><i ng-class="{'fa-square-o': !document.is_active &amp;&amp; document.is_possible}" class="fa fa-2x fa-check-square-o"></i><span ng-bind="document.document_type.title"></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <h3>Localização</h3>
+          <p ng-bind="property.full_address"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <!--
+          <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+          <ui-gmap-marker idKey="map" coords="map.center"></ui-gmap-marker>
+          </ui-gmap-google-map>
+          --><img ng-show="map.center" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{map.center.latitude}},{{map.center.longitude}}&amp;markers={{map.center.latitude}},{{map.center.longitude}}&amp;zoom=15&amp;size=600x360" class="img-responsive"/>
+        </div>
+        <div class="col-xs-6">
+          <div><img cloudinary="w_600,h_360,c_fill" cl-src="{{property.church.picture}}" class="img-responsive"/>
+            <!-- <img class="img-responsive" ng-src="{{property.church.picture}}"></img>-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+!!!
+%html{"ng-app" => "CCBApp"}
+	%head
+		%title Gestão do Patrimônio
+		%meta{:charset => "utf-8"}/
+		= stylesheet_link_tag "application", media: "all"
+		= javascript_include_tag "application"
+		:css
+			.progress-bar, .columns-panel{
+				transition: width 500ms;
+			}
+
+
+	%body{"ng-controller" => "PatrimonyCtrl"}
+		.loading{ng:{hide:"cards"}}
+			%h1.text-center
+				%i.fa.fa-cog.fa-spin
+				%br
+				Aguarde
+		.loaded{ng:{show:"cards"}}
+			%header{ng:{init:"partial = 'documentos'"}}
+				%nav.navbar.navbar-inverse.navbar-embossed{:role => "navigation"}
+					.container-fluid
+						.navbar-header
+							%button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+								%span.sr-only Toggle navigation
+								%span.icon-bar
+								%span.icon-bar
+								%span.icon-bar
+						#bs-example-navbar-collapse-1.collapse.navbar-collapse
+							%ul.nav.navbar-nav
+								%li{ng:{class:"{active: (partial == 'documentos')}"}}
+									%a{:href => "javascript:",ng:{click:"partial = 'documentos'"}}
+										Documentos
+								%li{ng:{class:"{active: (partial == 'igrejas')}"}}
+									%a{:href => "javascript:",ng:{click:"partial = 'igrejas'"}}
+										Igrejas
+			.col-sm-12
+				%ul.nav.nav-pills{ng:{show: "status"}}
+					%li{role: "presentation",ng:{class:"{active: search.status == ''}"}}
+						%a{href:"javascript:",ng:{click:"search.status = ''"}} Todos
+					%li{role: "presentation",ng:{repeat:"stat in status | orderBy:stat",class:"{active: search.status == stat}"}}
+						%a{href:"javascript:",ng:{bind:"stat",click:"search.status = stat"}}
+
+			.div{ng:{show:"partial == 'documentos'"}}
+				= render "documentos"
+			.div{ng:{show:"partial == 'igrejas'"}}
+				= render "igrejas"

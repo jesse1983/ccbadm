@@ -1,0 +1,31 @@
+angular.module('CCBApp').controller "GoodsIndexController", ['$scope',($scope) ->
+	addInvoiceButton = () ->
+		if $(".goodbox input[type='checkbox']:checked").length > 0
+			$(".destroyGoods").show().val("Apagar (" + $(".goodbox input[type='checkbox']:checked").length + ")")
+			$(".addInvoice").show().val("Adicionar nota fiscal (" + $(".goodbox input[type='checkbox']:checked").length + ")")
+		else
+			$(".addInvoice,.destroyGoods").hide()
+
+
+
+	
+	addInvoiceButton()
+	#hide buttons
+	if $(".goodbox input[type='checkbox']").length == 0
+		$("#good_ids_select_all, .addInvoice, .destroyGoods").hide()	
+
+	#Select all
+	$("#good_ids_select_all").click ->
+		$(".goodbox input[type='checkbox']").attr("checked",$(this).is(":checked"))
+		addInvoiceButton()
+	#Checkbox click
+	$(".goodbox input[type='checkbox']").click ->
+		addInvoiceButton()
+		$(this).parent().parent().parent().parent().toggleClass("panel-primary")
+	# Destroy click
+	$(".destroyGoods").click ->
+		if confirm("Deseja realmente apagar esses bens?")
+			$(".formindex").attr({action:$("#delete_url").val()}).submit()
+
+
+]

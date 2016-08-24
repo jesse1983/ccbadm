@@ -1,0 +1,8 @@
+angular.module('CCBApp').controller "ChurchesController", ['$scope','CoreFactory','$interval',($scope,CoreFactory,$interval) ->
+
+	$scope.init = () ->
+		$scope.churches = []
+
+		CoreFactory.churches.query {},(response) ->
+			$scope.churches = response
+]

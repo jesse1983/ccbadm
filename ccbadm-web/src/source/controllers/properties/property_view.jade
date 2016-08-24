@@ -1,0 +1,35 @@
+div
+  h1.text-center(ng-show='!ready')
+    i.fa.fa-cog.fa-spin.fa-5
+  .loaded(ng-show='ready')
+    ng-include(src="'controllers/properties/_header_property.html'")
+    articles
+      .container
+        .row
+          .col-xs-12
+            h3 Documentos
+        .row
+          .col-xs-12(ng-repeat='status in GetStatuses()' ng-if="status.documents.length > 0 ")
+            h4(ng-bind="status.title + ' (' + status.documents.length + ')' ")
+            .row
+              //- .col-xs-12(ng-repeat="document in status.documents" ng-click='openDocument(property,document)' style="cursor: pointer")
+
+              .col-xs-12(ng-repeat="document in status.documents | orderBy:document_type.order" ng-click='gotoDocument(property,document.id)' style="cursor: pointer")
+                .tile
+                    .media
+                      .media-right.pull-right.documents-icons.hidden-xs
+                        i.fa.fa-paperclip(ng-class="{inactive: document.attachments_count < 1}")
+                        i.fa.fa-comments-o(ng-class="{inactive: document.comments_count < 1}")
+                        i.fa.fa-exchange(ng-class="{inactive: document.active_requests_count < 1}")
+                      .media-left(style="min-width: 90px")
+                        span.dc_code(ng-bind='document.document_type.code' style="font-size: 36px")
+                      .media-body.text-left
+                        div
+                          strong.dc_short_name(ng-bind='document.document_type.short_name')
+                        .label(ng-style="{'background-color': status.color}" ng-bind="status.title")
+
+            hr
+          .col-xs-12.text-center
+            a.btn.btn-default(href='/#/properties/{{property.id}}/print') Imprimir capa
+
+

@@ -1,0 +1,99 @@
+doctype html
+html(ng-app='CCBApp')
+  head(ng-controller='HeadController')
+    title(ng-bind='title')
+    meta(charset='utf-8')
+    meta(content='width=device-width, initial-scale=1.0', name='viewport')
+    meta(content='Projeto CCB ADM', name='description')
+    // build:css css/build.css
+    link(rel="stylesheet" type="text/css" href="components/angular-bootstrap/ui-bootstrap-csp.css")
+    //- link(rel="stylesheet" type="text/css" href="components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css")
+    // inject:css
+    // endinject
+    // endbuild
+
+    include _metas.jade
+
+  body(ng-controller='NavController')
+    include _startup.jade
+    header.vertical.hidden-print(ng-show='$root.login && menuOpened')
+      .container-fluid.left-nav
+        .row
+          nav.nav.nav-stacked.navbar-inverse.left-nav.col-xs-12.col-sm-4.col-md-3.nga-fast.nga-stagger.nga-slide-up(ng-show='$root.login && menuOpened', role='navigation')
+            .navbar-login
+              button.close(ng-click='menuOpened = null', type='button')
+                span ×
+              span(ng-bind="$root.login.first_name + ' ' + $root.login.last_name")
+            ul.nav
+              li
+                a(href='/#/properties', ng-click='menuOpened = null') Imóveis
+              li
+                a(href='/#/requests', ng-click='menuOpened = null') Retiradas
+
+              li(ng-show="$root.can('read','User')")
+                a(href='/#/users', ng-click='menuOpened = null') Usuários
+
+              li
+                a(href='/#/logout', ng-click='menuOpened = null') Sair do CCB ADM
+          .right-nav.hidden-xs.col-sm-8.col-md-9(ng-click='menuOpened = null')
+    header.horizontal.hidden-print(ng-show='$root.login')
+      nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+        .nga-fast.nga-stagger.nga-rotate-down(ng-hide='showSearch')
+          ul.nav.navbar-nav.navbar-left.pull-left
+            li(ng-show='!$root.nav.back')
+              a(href='javascript:;', ng-click='menuOpened = true')
+                i.fa.fa-bars
+            li(ng-show='$root.nav.back')
+              a(href='javascript:;',ng-click="back()")
+                i.fa.fa-chevron-left
+                span.hidden-xs {{$root.nav.back.title}}
+          ul.nav.navbar-nav.navbar-right.pull-right
+            li(ng-show='!$root.nav.button')
+              a(href='javascript:', ng-click='showSearch = true')
+                i.fa.fa-search
+            li(ng-show='$root.nav.button')
+              a(href='javascript:', ng-bind='$root.nav.button.label', ng-click='$root.nav.button.action()')
+          .navbar-brand(ng-bind='$root.nav.current.title')
+        .nga-fast.nga-stagger.nga-rotate-up(ng-show='showSearch')
+          form.form-search(name='formSearch', ng-submit='submitSearch(formSearch.$valid)', novalidate='', role='search')
+            .form-group
+              .input-group
+                input.form-control(maxlength='64', ng-blur='showSearch = false', ng-model='formSearch.q', placeholder='Buscar imóvel', required='', type='search', set-focus="showSearch")
+                span.input-group-btn
+                  button.btn(type='submit')
+                    span.fa.fa-search
+                  button.btn(ng-click='showSearch = false')
+                    span.fa.fa-times
+    .content.nga-fast.nga-stagger.nga-squash-left(ng-view='')
+
+  // build:js js/build.js
+  script(type="text/javascript" src="components/lodash/dist/lodash.js")
+  script(type="text/javascript" src="components/underscore/underscore.js")
+  script(type="text/javascript" src="components/jquery/dist/jquery.js")
+  script(type="text/javascript" src="components/js-cookie/src/js.cookie.js")
+  script(type="text/javascript" src="components/bootstrap/dist/js/bootstrap.js")
+  script(type="text/javascript" src="components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js")
+  script(type="text/javascript" src="components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.pt-BR.min.js")
+  script(type="text/javascript" src="components/angular/angular.js")
+  script(type="text/javascript" src="components/angular-animate/angular-animate.js")
+  script(type="text/javascript" src="components/angular-resource/angular-resource.js")
+  script(type="text/javascript" src="components/angular-route/angular-route.js")
+  script(type="text/javascript" src="components/angular-cookies/angular-cookies.js")
+  script(type="text/javascript" src="components/angular-bootstrap/ui-bootstrap.js")
+  script(type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.js")
+  script(type="text/javascript" src="components/angular-prompt/dist/angular-prompt.js")
+  script(type="text/javascript" src="components/moment/moment.js")
+  script(type="text/javascript" src="components/moment/locale/pt-br.js")
+  script(type="text/javascript" src="components/angular-moment/angular-moment.js")
+  script(type="text/javascript" src="components/jquery.dotdotdot/src/js/jquery.dotdotdot.js")
+  script(type="text/javascript" src="components/ng-file-upload/ng-file-upload-all.js")
+  script(type="text/javascript" src="components/qrcode-generator/js/qrcode.js")
+  script(type="text/javascript" src="components/qrcode-generator/js/qrcode_UTF8.js")
+  script(type="text/javascript" src="components/angular-qrcode/qrcode.js")
+  script(type="text/javascript" src="components/angular-google-maps/dist/angular-google-maps.js")
+
+  // inject:js
+  // endinject
+  // endbuild
+
+

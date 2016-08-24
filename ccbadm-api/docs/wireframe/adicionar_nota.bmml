@@ -1,0 +1,26 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="664" measuredH="880" mockupW="603" mockupH="826">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="61" y="201" w="-1" h="-1" measuredW="603" measuredH="596" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/adicionar_nota.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Title" x="61" y="54" w="-1" h="-1" measuredW="568" measuredH="43" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Adicionar%20nota%20-%20Bancos%20Bonfim</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::List" x="64" y="119" w="100" h="74" measuredW="100" measuredH="126" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>none</borderStyle>
+        <text>%23307%0A%23308%0A%23309</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Button" x="61" y="823" w="143" h="57" measuredW="107" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Adicionar%20nota</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,62 @@
+div
+  h1.text-center.hidden-print(ng-show='!ready')
+    i.fa.fa-cog.fa-spin.fa-5
+  .loaded(ng-show='ready')
+    ng-include(src="'controllers/properties/_header_property.html'")
+    .container
+      .row
+        .col-xs-6
+          h5 Códigos
+          .details-group
+            h6
+              small.details-label Antigo
+              .details-info(ng-bind='property.accountant_code')
+          .details-group
+            h6
+              small.details-label Cartográfico
+              .details-info(ng-bind='property.cartographic_code')
+          .details-group
+            h6
+              small.details-label IPTU
+              .details-info(ng-bind='property.tax_code')
+        .col-xs-6
+          h5 Áreas
+          .details-group(ng-show='property.main_area')
+            h6
+              small.details-label Principal
+              .details-info(ng-bind='property.main_area')
+          .details-group(ng-show='property.terrain_area')
+            h6
+              small.details-label Terreno
+              .details-info(ng-bind='property.terrain_area')
+          .details-group(ng-show='property.secondary_area')
+            h6
+              small.details-label Dependência
+              .details-info(ng-bind='property.secondary_area')
+          .details-group(ng-show='property.width_area')
+            h6
+              small.details-label Testada
+              .details-info(ng-bind='property.width_area')
+      .row
+        .col-sm-12
+          h3 Documentos
+        .col-xs-4(ng-repeat='column in [0,1,2]')
+          ul.list-unstyled
+            li(ng-repeat='document in documents', ng-if='range($index,column)')
+              i.fa.fa-2x.fa-check-square-o(ng-class="{'fa-square-o': !document.is_active && document.is_possible}")
+              span(ng-bind='document.document_type.title')
+      .row
+        .col-sm-12
+          h3 Localização
+          p(ng-bind='property.full_address')
+      .row
+        .col-xs-6
+          //
+            <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+            <ui-gmap-marker idKey="map" coords="map.center"></ui-gmap-marker>
+            </ui-gmap-google-map>
+          img.img-responsive(ng-show='map.center', ng-src='https://maps.googleapis.com/maps/api/staticmap?center={{map.center.latitude}},{{map.center.longitude}}&markers={{map.center.latitude}},{{map.center.longitude}}&zoom=15&size=600x360')
+        .col-xs-6
+          div
+            img.img-responsive(cloudinary='w_600,h_360,c_fill', cl-src='{{property.church.picture}}')
+            // <img class="img-responsive" ng-src="{{property.church.picture}}"></img>

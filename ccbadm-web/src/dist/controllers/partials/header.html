@@ -1,0 +1,14 @@
+
+<header style="background-image: -webkit-linear-gradient(bottom, rgba(52,73,94,1) 0%, rgba(52,73,94,0.7) 50%, rgba(52,73,94,0.5) 100%),url({{property.church.picture}})" class="property-box">
+  <div class="container">
+    <div class="col-xs-12">
+      <div class="qr-property visible-print-block">
+        <qrcode data="{{url}}" href="{{url}}" download="" size="100" level="2"></qrcode>
+      </div>
+      <div class="info-property">
+        <h1 ng-bind="property.title"></h1>
+        <h2 ng-bind="property.church.name + ' (' + property.code + ')'"></h2>
+      </div>
+    </div>
+  </div>
+</header>

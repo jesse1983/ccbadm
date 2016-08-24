@@ -1,0 +1,8 @@
+
+<nav ng-show="hasPagination()">
+  <ul class="pager">
+    <li ng-class="{disabled: object.offset &lt; perPage}" class="previous"><a href="javascript:" ng-click="previous()" ng-disabled="object.offset &lt; perPage">Anterior</a></li>
+    <li class="page"><a href="" ng-bind="page"></a></li>
+    <li ng-class="{disabled: object.offset &gt;= (object.total - perPage)}" class="next"><a href="javascript:" ng-click="next()" ng-disabled="object.offset &gt;= (object.total - perPage)">Próximo</a></li>
+  </ul>
+</nav>

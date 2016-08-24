@@ -1,0 +1,16 @@
+style.
+  body{
+    margin: 0;
+    padding: 0;
+  }
+  .startup{
+    background: url('assets/images/icons/apple-touch-icon.png') no-repeat center center #24bb9a;
+    width: 100%;
+    position: absolute;
+    z-index: 1000000;
+    text-align: center;
+  }
+.startup.nga-fast.nga-squash-vertical-move(ng-show="false")
+script(type: "text/javascript").
+  s = document.getElementsByClassName("startup");
+  s[0].style.height = window.innerHeight + "px";

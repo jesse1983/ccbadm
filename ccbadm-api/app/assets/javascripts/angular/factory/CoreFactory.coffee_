@@ -1,0 +1,16 @@
+angular.module("CCBApp").factory "CoreFactory", ['$resource',($resource) ->
+	core_url = ""
+	csrfToken = $('meta[name=csrf-token]').attr('content')
+	config = 
+		get: 
+			method: 'JSONP'
+			timeout: 60000
+			params: 
+				callback: 'JSON_CALLBACK'
+		save:
+			method: 'post'
+			
+	goods: (church_id) ->
+		$resource "#{core_url}/churches/#{church_id}/goods.json", {}, config
+	churches: $resource "#{core_url}/churches.json", {}, config
+]

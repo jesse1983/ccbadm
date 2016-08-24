@@ -1,0 +1,12 @@
+.container-fluid.container-bar
+  h1.text-center(ng-show='loading')
+    i.fa.fa-cog.fa-spin.fa-5
+  .row.demo-tiles(ng-show='properties')
+    h2.text-center(ng-show='notFound') Nada encontrado com "{{query.q}}"
+    .col-sm-3.nga-fast.nga-stagger.nga-squash-left(ng-repeat='prop in properties.data', ng-click='goto(prop.id)')
+      .palette-item
+        .palette.tile(ng-class="{'palette-clouds':!prop.is_active,'palette-concrete':prop.is_active}", style='background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 100%), url(http://res.cloudinary.com/hmj5guwuy/image/upload/w_320,h_180,c_fill/v1429922554/{{prop.church.picture_id}}.jpg)')
+          h3(ng-bind='prop.title')
+          .dotdotdot
+            p(ng-bind="prop.church.name || 'Sem igreja'")
+  paginalize(object='properties', method='getProperties')

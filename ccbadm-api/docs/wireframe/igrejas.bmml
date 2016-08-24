@@ -1,0 +1,15 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="533" measuredH="540" mockupW="475" mockupH="486">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::DataGrid" x="58" y="114" w="475" h="426" measuredW="138" measuredH="411" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%227%2C88%2C46.40283203125%2C101%22%20href%3D%22tipo_bens.bmml%22%20alt%3D%22Bonfim%22%20id%3D%220%22/%3E</map>
+        <text>Igreja%0A%5BBonfim%5D%28tipo_bens%29%0AParque%20industrial%0ACidade%20Universit%E1ria%0AParque%20Bras%EDlia%0AParque%20industrial%0ACidade%20Universit%E1ria%0AParque%20Bras%EDlia%0AParque%20industrial%0ACidade%20Universit%E1ria%0AParque%20Bras%EDlia%0AParque%20industrial%0ACidade%20Universit%E1ria%0AParque%20Bras%EDlia</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Title" x="61" y="54" w="-1" h="-1" measuredW="129" measuredH="43" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Igrejas</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,46 @@
+.container.container-bar
+  h1.text-center(ng-show='!user')
+    i.fa.fa-cog.fa-spin.fa-5
+  .row(ng-show='user')
+    form.form-horizontal(ng-submit='save()', name='form')
+      .col-sm-2.avatar.hidden-xs.text-center
+        .palette.palette-clouds
+          i.fa.fa-user
+      .col-sm-10
+        .alert.alert-danger.alert-dismissible.nga-fast.nga-stagger.nga-rotate-down(role='alert', ng-show='errors')
+          small
+            button.close(type='button', ng-click='errors = null')
+              span(aria-hidden='true') ×
+            |                         "Usuário já está cadastrado"
+        .form-group
+          // first_name
+          div(ng-class="{'has-error': form.first_name.$invalid && submitted}")
+            input.form-control.input-lg(type='text', name='first_name', ng-model='user.first_name', ng-show='editable', required='', placeholder='Nome', ng-minlength='3')
+            h5(ng-bind='user.first_name', ng-show='!editable')
+          // last_name
+          div(ng-class="{'has-error': form.last_name.$invalid && submitted}")
+            input.form-control.input-lg(name='last_name', type='text', ng-model='user.last_name', ng-show='editable', required='', placeholder='Sobrenome', ng-minlength='3')
+            h5(ng-bind='user.last_name', ng-show='!editable')
+          // profile
+          div(ng-class="{'has-error': form.profile.$invalid && submitted}")
+            select.form-control.input-lg(name='profile', ng-model='user.profile', ng-options='profile.name for profile in profiles.data', ng-show='editable', required='')
+              option(value='') Selecione um perfil
+            h6(ng-bind='user.profile.name', ng-show='!editable')
+        hr
+        .form-group(ng-class="{'has-error': form.email.$invalid && submitted}")
+          label(for='email') E-mail
+          input.form-control.input-lg(type='email', name='email', ng-model='user.email', ng-show='editable', required='', placeholder='E-mail')
+          p.form-control-static(ng-bind='user.email', ng-show='!editable')
+        .form-group(ng-class="{'has-error': form.password.$invalid && submitted}")
+          label(for='password') Senha
+          input.form-control.input-lg(name='password', type='password', ng-model='user.password', ng-show='editable && isNew', ng-required='isNew', placeholder='Senha', ng-minlength='6')
+          p(ng-show='!isNew')
+            | ******
+            a(href='javascript:;', ng-click='changePassword()') Trocar senha
+        .form-group(ng-class="{'has-error': form.church.$invalid && submitted}")
+          label(for='church') Comum
+          select.form-control.input-lg(name='church', ng-model='user.church', ng-options='church.name for church in churches.data', ng-show='editable', required='')
+            option(value='') Selecione uma comum
+          p.form-control-static(ng-bind='user.church.name', ng-show='!editable')
+      .text-center(ng-show="$root.can('destroy','User')")
+        buttom.btn.btn-danger(ng-click='remove()', ng-show='!editable') Remover

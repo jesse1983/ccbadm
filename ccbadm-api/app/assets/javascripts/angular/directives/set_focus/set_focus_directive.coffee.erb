@@ -1,0 +1,11 @@
+angular.module('CCBApp').directive 'setFocus', ['$document',($document) ->
+    restrict: 'C'
+    scope:
+        setFocus: "="
+    link: (scope, elem, attr, ctrl) ->
+        $scope.$watch "setFocus", (n,o)->
+            if n?
+                elem.focus() if n == true
+        return true
+
+]

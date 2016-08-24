@@ -1,0 +1,120 @@
+.modal-header
+	h3.modal-title(ng-bind="vm.document.document_type.title")
+.modal-body.blockin
+	h1.text-center(ng-if="!vm.document.document_type")
+		i.fa.fa-cog.fa-spin.fa-5
+	.row(ng-if="vm.document.document_type")
+		.col-sm-8.col-xs-12.blocker
+			.section
+				.legend
+					i.fa.fa-bookmark
+					|  Status
+				//- Show only if auto status is null
+				.checkgroup.statuses(ng-if="!vm.isAutoStatus(vm.document)")
+					label.radio(ng-repeat="status in vm.statuses" ng-hide="status.meta.auto" ng-click="vm.document.status_id = status.uid; vm.document.status = status.url" ng-class="{checked: vm.document.status == status.url}")
+						//- input.custom-radio(type="radio" data-toggle="radio" name="status_id")
+						span.icons
+							i.fa.fa-circle-o(ng-if="vm.document.status != status.url")
+							i.fa.fa-dot-circle-o(ng-if="vm.document.status == status.url")
+						span {{status.title}}
+				//- Show if auto status is true
+				.statuses(ng-if="vm.isAutoStatus(vm.document)")
+					.label(ng-style="{'background-color': vm.GetStatus(vm.document).color}" ng-bind="vm.GetStatus(vm.document).title")
+			.section(ng-if="vm.document.document_type.is_expirable")
+				.legend
+					i.fa.fa-calendar
+					|  Vencimento do documento
+				div
+					form(name="formExpiresAt" novalidate="" ng-if="!vm.document.expires_at")
+						.form-group
+							input.form-control(type="text" ng-model="vm.unformatted"  placeholder="__/__/____" required ng-datepicker options="{autoclose: true, todayHighlight: true}")
+					div(ng-if="vm.document.expires_at")
+						a.btn.btn-link.pull-right(href="" ng-click="vm.document.expires_at = null") Editar
+						span Válido até&nbsp;
+						span(ng-bind="vm.GetExpiresAt(vm.document.expires_at)")
+			.section(ng-if="vm.document.requests.length > 0")
+				.legend(ng-init="request = vm.document.requests[0]" ng-if="request.is_active")
+					i.fa.fa-exchange
+					|  Retiradas
+				.form-group(ng-if="request.is_active")
+					.well
+						dl.dl-horizontal
+							dt Retirado em
+							dd(ng-bind="request.requested_at | amDateFormat:'DD/MM/YYYY'")
+
+							dt Retirado por
+							dd(ng-bind="request.requester")
+
+							dt Comum
+							dd(ng-bind="request.requester_church")
+
+							dt Telefone
+							dd(ng-bind="request.requester_phone_number")
+
+							dt(ng-if="request.comment") Obs:
+							dd(ng-if="request.comment" ng-bind="request.comment")
+
+							dt Devolver em
+							dd(ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'")
+					.text-center
+						a.btn.btn-link(href="" ng-click="vm.GetBackRequest(request)") Marcar como devolvido
+
+			.section
+				.legend
+					i.fa.fa-comments-o
+					|  Comentários
+				.form-group
+						form(name="formComment" novalidate="" ng-submit="vm.AddComment(vm.comment, vm.document)")
+							textarea.form-control(ng-model="vm.comment.text" rows="4" placeholder="Insira aqui seu comentário" required="" ng-disabled="vm.loading_comment")
+							.pull-right
+								button.btn.btn-default(type="submit" ng-show="formComment.$valid" ng-disabled="loading_comment") Enviar
+				.comments
+					.comment(ng-repeat="comment in vm.document.comments | orderBy:'-id'")
+						hr
+						div
+							div
+								small
+									strong(ng-bind="comment.user.first_name + ' '")
+									| escreveu há&nbsp;
+									span(am-time-ago="comment.created_at")
+							div
+								p
+									i.fa.fa-comment
+									span(ng-bind="' ' + comment.text")
+								.pull-right
+									.btn-group
+										small
+											a.btn.btn-link(href="" ng-click="vm.DeleteComment(comment, vm.document)") Excluir
+
+		.col-sm-4.col-xs-12.blocker
+			.section
+				.legend
+					i.fa.fa-paperclip
+					|  Digitalização
+				.form-group
+					div(ng-show="vm.document.attachments.length < 1 && $root.can('create','Attachment')")
+						.drop-box.palette.palette-clouds(
+							ngf-drop='vm.Upload($files)'
+							ngf-select='vm.Upload($files)'
+							ngf-drag-over-class='dragover'
+							ngf-allow-dir='true'
+							ngf-accept="'.jpg,.png,.pdf'"
+							style='height: 100px; padding-top: 30px'
+						)
+							span(ng-show='!vm.upl')
+								| Clique ou arraste
+								br
+								| os arquivos aqui
+							span(ng-show='vm.upl', ng-bind='vm.upl.percent')
+						div(ngf-no-file-drop='') Não é possível subir arquivos nesse browser
+					.text-center(ng-show='vm.document.attachments.length > 0', ng-repeat='attachment in vm.document.attachments')
+						img.img-responsive.img-rounded(cloudinary='w_400,h_500,c_fill', cl-src='{{attachment.attachment}}', height='500')
+						a.btn.btn-link(href='{{attachment.attachment}}', download='') Download
+						button.btn.btn-link(ng-click='vm.DestroyAttach(attachment)', ng-show="$root.can('destroy','Attachment')") Excluir
+
+
+
+.modal-footer
+	button.btn.btn-danger(type='button', ng-click='vm.RemoveDocument(vm.document)' ng-if="vm.isAutoStatus(vm.document)") Marcar como ausente
+	button.btn.btn-success(type='button', ng-click='vm.SaveDocument(vm.document)' ng-disabled="vm.saving") Salvar
+	button.btn.btn-default(type='button', ng-click='vm.ModalCancel()') Fechar

@@ -1,0 +1,42 @@
+.container.container-bar
+	h1.text-center(ng-show='vm.loading')
+		i.fa.fa-cog.fa-spin.fa-5
+	.text-center(ng-if="vm.requests_total == 0")
+		h3 Não há nenhuma retirada pendente
+		p
+			a(href="#/requests/new") Clique aqui para cadastrar
+	div(ng-if="vm.requests_total > 0")
+		h4
+			| Há
+			span(ng-bind="' ' + vm.requests_total + ' '")
+			span(ng-if="vm.requests_total == 1") documento retirado
+			span(ng-if="vm.requests_total != 1") documentos retirados
+		.row
+			.col-sm-12(style="cursor: pointer" ng-repeat="request in vm.requests.data" ng-click="vm.OpenRequest(request)" ng-if="request.is_active")
+				//- .tile.media.palette.palette-sun-flower
+				.tile.media
+					.media-left(style="font-size: 40px; padding: 10px 20px 10px 10px")
+						i.fa.fa-file-text-o
+					.media-body.text-left
+						.label.label-danger(ng-if="request.is_expired") Expirado
+						h1.tile-title(ng-bind="request.meta.church.name  + ' ' + request.meta.property.code ")
+						h2.tile-title(ng-bind="request.meta.document_type.title")
+						br
+						p
+							| Retirado há
+							code(am-time-ago="request.requested_at")
+							| por
+							code(ng-bind="request.requester")
+							br
+							| Devolver até
+							code(ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'")
+		paginalize(object="vm.requests" method="vm.GetRequests")
+		script(type="text/ng-template" id="modal.html")
+			.modal-header
+				h3.modal-title(ng-bind="request.meta.document_type.title")
+			.modal-body
+				include ./request_view.info.jade
+			.modal-footer
+				button.btn.btn-primary(type='button', ng-click='GetBackRequest()') Marcar como entregue
+				button.btn.btn-default(type='button', ng-click='ModalCancel()') Fechar
+

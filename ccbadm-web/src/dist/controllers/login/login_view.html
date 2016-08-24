@@ -1,0 +1,20 @@
+
+<div class="container-fluid container-bar"> 
+  <form ng-submit="vm.logon()" name="form" novalidate="" class="col-sm-4 col-sm-offset-4">
+    <div class="login-form">
+      <h1 class="text-center">CCB ADM</h1>
+      <p class="text-center">Por favor, entre com seu e-mail e senha</p>
+      <div class="form-group">
+        <input id="email" ng-model="vm.user.email" required="" type="text" value="" placeholder="Entre com seu e-mail" name="uEmail" class="form-control login-field"/>
+        <label for="email" class="login-field-icon fa fa-user"></label>
+      </div>
+      <div class="form-group">
+        <input id="password" ng-model="vm.user.password" required="" type="password" value="" placeholder="Entre com sua senha" name="uPassword" class="form-control login-field"/>
+        <label for="password" class="login-field-icon fa fa-lock"></label>
+      </div>
+      <div role="alert" ng-show="vm.error" class="alert alert-danger alert-dismissible nga-fast nga-stagger nga-rotate-down"><small>
+          <button type="button" ng-click="vm.error = null" class="close"><span aria-hidden="true">×</span></button>	            	{{vm.error.error}}</small></div>
+      <button type="submit" action-button="vm.loading" class="btn btn-primary btn-lg btn-block">Entrar</button>
+    </div>
+  </form>
+</div>

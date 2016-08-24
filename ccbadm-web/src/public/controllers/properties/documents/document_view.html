@@ -1,0 +1,98 @@
+
+<div class="modal-header">
+  <h3 ng-bind="vm.document.document_type.title" class="modal-title"></h3>
+</div>
+<div class="modal-body blockin">
+  <h1 ng-if="!vm.document.document_type" class="text-center"><i class="fa fa-cog fa-spin fa-5"></i></h1>
+  <div ng-if="vm.document.document_type" class="row">
+    <div class="col-sm-8 col-xs-12 blocker">
+      <div class="section">
+        <div class="legend"><i class="fa fa-bookmark"></i> Status</div>
+        <div ng-if="!vm.isAutoStatus(vm.document)" class="checkgroup statuses">
+          <label ng-repeat="status in vm.statuses" ng-hide="status.meta.auto" ng-click="vm.document.status_id = status.uid; vm.document.status = status.url" ng-class="{checked: vm.document.status == status.url}" class="radio"><span class="icons"><i ng-if="vm.document.status != status.url" class="fa fa-circle-o"></i><i ng-if="vm.document.status == status.url" class="fa fa-dot-circle-o"></i></span><span>{{status.title}}</span>
+          </label>
+        </div>
+        <div ng-if="vm.isAutoStatus(vm.document)" class="statuses">
+          <div ng-style="{'background-color': vm.GetStatus(vm.document).color}" ng-bind="vm.GetStatus(vm.document).title" class="label"></div>
+        </div>
+      </div>
+      <div ng-if="vm.document.document_type.is_expirable" class="section">
+        <div class="legend"><i class="fa fa-calendar"></i> Vencimento do documento</div>
+        <div>
+          <form name="formExpiresAt" novalidate="" ng-if="!vm.document.expires_at">
+            <div class="form-group">
+              <input type="text" ng-model="vm.unformatted" placeholder="__/__/____" required="required" ng-datepicker="ng-datepicker" options="{autoclose: true, todayHighlight: true}" class="form-control"/>
+            </div>
+          </form>
+          <div ng-if="vm.document.expires_at"><a href="" ng-click="vm.document.expires_at = null" class="btn btn-link pull-right">Editar</a><span>Válido até&nbsp;</span><span ng-bind="vm.GetExpiresAt(vm.document.expires_at)"></span></div>
+        </div>
+      </div>
+      <div ng-if="vm.document.requests.length &gt; 0" class="section">
+        <div ng-init="request = vm.document.requests[0]" ng-if="request.is_active" class="legend"><i class="fa fa-exchange"></i> Retiradas</div>
+        <div ng-if="request.is_active" class="form-group">
+          <div class="well">
+            <dl class="dl-horizontal">
+              <dt>Retirado em</dt>
+              <dd ng-bind="request.requested_at | amDateFormat:'DD/MM/YYYY'"></dd>
+              <dt>Retirado por</dt>
+              <dd ng-bind="request.requester"></dd>
+              <dt>Comum</dt>
+              <dd ng-bind="request.requester_church"></dd>
+              <dt>Telefone</dt>
+              <dd ng-bind="request.requester_phone_number"></dd>
+              <dt ng-if="request.comment">Obs:</dt>
+              <dd ng-if="request.comment" ng-bind="request.comment"></dd>
+              <dt>Devolver em</dt>
+              <dd ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'"></dd>
+            </dl>
+          </div>
+          <div class="text-center"><a href="" ng-click="vm.GetBackRequest(request)" class="btn btn-link">Marcar como devolvido</a></div>
+        </div>
+      </div>
+      <div class="section">
+        <div class="legend"><i class="fa fa-comments-o"></i> Comentários</div>
+        <div class="form-group">
+          <form name="formComment" novalidate="" ng-submit="vm.AddComment(vm.comment, vm.document)">
+            <textarea ng-model="vm.comment.text" rows="4" placeholder="Insira aqui seu comentário" required="" ng-disabled="vm.loading_comment" class="form-control"></textarea>
+            <div class="pull-right">
+              <button type="submit" ng-show="formComment.$valid" ng-disabled="loading_comment" class="btn btn-default">Enviar</button>
+            </div>
+          </form>
+        </div>
+        <div class="comments">
+          <div ng-repeat="comment in vm.document.comments | orderBy:'-id'" class="comment">
+            <hr/>
+            <div>
+              <div><small><strong ng-bind="comment.user.first_name + ' '"></strong>escreveu há&nbsp;<span am-time-ago="comment.created_at"></span></small></div>
+              <div>
+                <p><i class="fa fa-comment"></i><span ng-bind="' ' + comment.text"></span></p>
+                <div class="pull-right">
+                  <div class="btn-group"><small><a href="" ng-click="vm.DeleteComment(comment, vm.document)" class="btn btn-link">Excluir</a></small></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 col-xs-12 blocker">
+      <div class="section">
+        <div class="legend"><i class="fa fa-paperclip"></i> Digitalização</div>
+        <div class="form-group">
+          <div ng-show="vm.document.attachments.length &lt; 1 &amp;&amp; $root.can('create','Attachment')">
+            <div ngf-drop="vm.Upload($files)" ngf-select="vm.Upload($files)" ngf-drag-over-class="dragover" ngf-allow-dir="true" ngf-accept="'.jpg,.png,.pdf'" style="height: 100px; padding-top: 30px" class="drop-box palette palette-clouds"><span ng-show="!vm.upl">Clique ou arraste<br/>os arquivos aqui</span><span ng-show="vm.upl" ng-bind="vm.upl.percent"></span></div>
+            <div ngf-no-file-drop="">Não é possível subir arquivos nesse browser</div>
+          </div>
+          <div ng-show="vm.document.attachments.length &gt; 0" ng-repeat="attachment in vm.document.attachments" class="text-center"><img cloudinary="w_400,h_500,c_fill" cl-src="{{attachment.attachment}}" height="500" class="img-responsive img-rounded"/><a href="{{attachment.attachment}}" download="" class="btn btn-link">Download</a>
+            <button ng-click="vm.DestroyAttach(attachment)" ng-show="$root.can('destroy','Attachment')" class="btn btn-link">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" ng-click="vm.RemoveDocument(vm.document)" ng-if="vm.isAutoStatus(vm.document)" class="btn btn-danger">Marcar como ausente</button>
+  <button type="button" ng-click="vm.SaveDocument(vm.document)" ng-disabled="vm.saving" class="btn btn-success">Salvar</button>
+  <button type="button" ng-click="vm.ModalCancel()" class="btn btn-default">Fechar</button>
+</div>

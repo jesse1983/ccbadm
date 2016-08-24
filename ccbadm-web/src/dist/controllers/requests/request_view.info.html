@@ -1,0 +1,27 @@
+
+<h4>Responsável</h4>
+<hr/>
+<dl class="dl-horizontal">
+  <dt>Nome</dt>
+  <dd ng-bind="request.requester"></dd>
+  <dt>Comum</dt>
+  <dd ng-bind="request.requester_church"></dd>
+  <dt>Telefone</dt>
+  <dd ng-bind="request.requester_phone_number"></dd>
+  <dt>Cadastrado por</dt>
+  <dd ng-bind="request.user.first_name + ' ' + request.user.last_name"></dd>
+  <dt ng-if="request.comment">Obs:</dt>
+  <dd ng-if="request.comment" ng-bind="request.comment"></dd>
+</dl>
+<h4>Documento</h4>
+<hr/>
+<dl class="dl-horizontal">
+  <dt>Documento</dt>
+  <dd ng-bind="request.meta.document_type.title"></dd>
+  <dt>Código Brás</dt>
+  <dd ng-bind="request.meta.property.code"></dd>
+  <dt>Casa de oração</dt>
+  <dd ng-bind="request.meta.church.name"></dd>
+  <dt>Devolver em</dt>
+  <dd ng-bind="request.return_in | amDateFormat:'DD/MM/YYYY'"></dd>
+</dl>

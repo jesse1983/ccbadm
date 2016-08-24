@@ -1,0 +1,68 @@
+
+
+<div class="container container-bar">
+  <div class="row">
+    <form id="form" name="vm.form" ng-submit="vm.Save()" class="col-sm-6 col-sm-offset-3">
+      <div ng-class="{'has-error':vm.form.requester.$invalid &amp;&amp; vm.submitted}" class="form-group">
+        <label>Responsável (retirado por)</label>
+        <input type="text" name="requester" ng-model="vm.request.requester" placeholder="Nome do responsável" required="required" class="form-control"/>
+      </div>
+      <div ng-class="{'has-error':vm.form.requester_church.$invalid &amp;&amp; vm.submitted}" class="form-group">
+        <label>Comum do responsável</label>
+        <input type="text" name="requester_church" ng-model="vm.request.requester_church" placeholder="Comum do responsável" required="required" class="form-control"/>
+      </div>
+      <div ng-class="{'has-error':vm.form.requester_phone_number.$invalid &amp;&amp; vm.submitted}" class="form-group">
+        <label>Telefone do responsável</label>
+        <input type="text" name="requester_phone_number" ng-model="vm.request.requester_phone_number" placeholder="Telefone do responsável" required="required" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div ng-class="{'has-error':vm.form.requested_at.$invalid &amp;&amp; vm.submitted}" class="col-sm-6">
+            <label>Retirado em</label>
+            <input type="text" name="requested_at" ng-model="vm.request.requested_at" placeholder="__/__/____" required="required" ng-datepicker="ng-datepicker" options="{autoclose: true, todayHighlight: true}" class="form-control"/>
+          </div>
+          <div ng-class="{'has-error':vm.form.return_in.$invalid &amp;&amp; vm.submitted}" class="col-sm-6">
+            <label>Agendar entrega para</label>
+            <input type="text" name="return_in" ng-model="vm.request.return_in" placeholder="__/__/____" required="required" ng-datepicker="ng-datepicker" options="{autoclose: true, todayHighlight: true}" class="form-control"/>
+          </div>
+        </div>
+      </div>
+      <hr/>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-6">
+            <div ng-class="{'has-error':vm.form.church_id.$invalid &amp;&amp; vm.submitted}" class="form-group">
+              <label>Escolha a casa de oração</label>
+              <select name="church_id" ng-disabled="!vm.churches" ng-model="vm.church_id" ng-options="church.id as church.name for church in vm.churches" ng-change="vm.GetProperties(vm.church_id)" class="form-control">
+                <option value="">Casa de oração</option>
+              </select><small ng-if="vm.loading == 'churches'" class="help-block"><i class="fa fa-cog fa-spin"></i> carregando...</small>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div ng-class="{'has-error':vm.form.property_id.$invalid &amp;&amp; vm.submitted}" class="form-group">
+              <label>Escolha o imóvel</label>
+              <select name="property_id" ng-disabled="!vm.properties" ng-model="vm.property_id" ng-options="property.id as property.title for property in vm.properties" ng-change="vm.GetDocuments(vm.property_id)" class="form-control">
+                <option value="">Imóvel</option>
+              </select><small ng-if="vm.loading == 'properties'" class="help-block"><i class="fa fa-cog fa-spin"></i> carregando...</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div ng-class="{'has-error':vm.form.requestable_id.$invalid &amp;&amp; vm.submitted}" class="form-group">
+              <label>Escolha do documento</label>
+              <select name="requestable_id" ng-disabled="!vm.documents" ng-model="vm.request.requestable_id" ng-options="document.id as document.document_type.title for document in vm.documents" required="required" class="form-control">
+                <option value="">Documento</option>
+              </select><small ng-if="vm.loading == 'documents'" class="help-block"><i class="fa fa-cog fa-spin"></i> carregando...</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-class="{'has-error':vm.form.comment.$invalid &amp;&amp; vm.submitted}" class="form-group">
+        <label>Observações</label>
+        <textarea type="text" name="comment" ng-model="vm.request.comment" rows="10" class="form-control"></textarea>
+      </div>
+      <p></p>
+    </form>
+  </div>
+</div>

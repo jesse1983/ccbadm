@@ -1,0 +1,10 @@
+nav(ng-show='hasPagination()')
+	ul.pager
+		li.previous(ng-class='{disabled: object.offset < perPage}')
+			a(href='javascript:', ng-click='previous()', ng-disabled='object.offset < perPage') Anterior
+
+		li.page
+			a(href="" ng-bind="page")
+
+		li.next(ng-class='{disabled: object.offset >= (object.total - perPage)}')
+			a(href='javascript:', ng-click='next()', ng-disabled='object.offset >= (object.total - perPage)') Próximo

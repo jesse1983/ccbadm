@@ -1,0 +1,55 @@
+
+<div class="container container-bar">
+  <h1 ng-show="!user" class="text-center"><i class="fa fa-cog fa-spin fa-5"></i></h1>
+  <div ng-show="user" class="row">
+    <form ng-submit="save()" name="form" class="form-horizontal">
+      <div class="col-sm-2 avatar hidden-xs text-center">
+        <div class="palette palette-clouds"><i class="fa fa-user"></i></div>
+      </div>
+      <div class="col-sm-10">
+        <div role="alert" ng-show="errors" class="alert alert-danger alert-dismissible nga-fast nga-stagger nga-rotate-down"><small>
+            <button type="button" ng-click="errors = null" class="close"><span aria-hidden="true">×</span></button>                        "Usuário já está cadastrado"</small></div>
+        <div class="form-group">
+          <!-- first_name-->
+          <div ng-class="{'has-error': form.first_name.$invalid &amp;&amp; submitted}">
+            <input type="text" name="first_name" ng-model="user.first_name" ng-show="editable" required="" placeholder="Nome" ng-minlength="3" class="form-control input-lg"/>
+            <h5 ng-bind="user.first_name" ng-show="!editable"></h5>
+          </div>
+          <!-- last_name-->
+          <div ng-class="{'has-error': form.last_name.$invalid &amp;&amp; submitted}">
+            <input name="last_name" type="text" ng-model="user.last_name" ng-show="editable" required="" placeholder="Sobrenome" ng-minlength="3" class="form-control input-lg"/>
+            <h5 ng-bind="user.last_name" ng-show="!editable"></h5>
+          </div>
+          <!-- profile-->
+          <div ng-class="{'has-error': form.profile.$invalid &amp;&amp; submitted}">
+            <select name="profile" ng-model="user.profile" ng-options="profile.name for profile in profiles.data" ng-show="editable" required="" class="form-control input-lg">
+              <option value="">Selecione um perfil</option>
+            </select>
+            <h6 ng-bind="user.profile.name" ng-show="!editable"></h6>
+          </div>
+        </div>
+        <hr/>
+        <div ng-class="{'has-error': form.email.$invalid &amp;&amp; submitted}" class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" name="email" ng-model="user.email" ng-show="editable" required="" placeholder="E-mail" class="form-control input-lg"/>
+          <p ng-bind="user.email" ng-show="!editable" class="form-control-static"></p>
+        </div>
+        <div ng-class="{'has-error': form.password.$invalid &amp;&amp; submitted}" class="form-group">
+          <label for="password">Senha</label>
+          <input name="password" type="password" ng-model="user.password" ng-show="editable &amp;&amp; isNew" ng-required="isNew" placeholder="Senha" ng-minlength="6" class="form-control input-lg"/>
+          <p ng-show="!isNew">******<a href="javascript:;" ng-click="changePassword()">Trocar senha</a></p>
+        </div>
+        <div ng-class="{'has-error': form.church.$invalid &amp;&amp; submitted}" class="form-group">
+          <label for="church">Comum</label>
+          <select name="church" ng-model="user.church" ng-options="church.name for church in churches.data" ng-show="editable" required="" class="form-control input-lg">
+            <option value="">Selecione uma comum</option>
+          </select>
+          <p ng-bind="user.church.name" ng-show="!editable" class="form-control-static"></p>
+        </div>
+      </div>
+      <div ng-show="$root.can('destroy','User')" class="text-center">
+        <buttom ng-click="remove()" ng-show="!editable" class="btn btn-danger">Remover</buttom>
+      </div>
+    </form>
+  </div>
+</div>

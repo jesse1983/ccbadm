@@ -1,0 +1,49 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    container_name: ccbadm-db
+    # user: "root"
+    volumes:
+      - /data/ccbadm-db:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - PGUSER=postgres
+      - POSTGRES_DB=d4ulqlkckanfe2
+    ports:
+      - '5432:5432'
+  cache:
+    image: memcached
+    container_name: ccbadm-cache
+  api:
+    image: jesse1983/ccbadm-api:latest
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    # command: puma config.ru -p 3000
+    container_name: ccbadm-api
+    volumes:
+      - ./ccbadm-api:/app/
+    environment:
+      RAILS_ENV: development
+      DATABASE_NAME: d4ulqlkckanfe2
+      DATABASE_HOST: ccbadm-db
+      DATABASE_USERNAME: postgres
+      MEMCACHED_URL: "ccbadm-cache:11211"
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+      - cache
+    stdin_open: true
+    tty: true
+  web:
+    image: jesse1983/ccbadm-web:latest
+    command: npm start
+    container_name: ccbadm-web
+    volumes:
+      - ./ccbadm-web/src:/src
+    environment:
+      PORT: 5000
+    ports:
+      - '5000:5000'
+    depends_on:
+      - api
