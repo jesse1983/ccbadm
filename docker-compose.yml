@@ -36,13 +36,14 @@ services:
     stdin_open: true
     tty: true
   web:
-    image: jesse1983/ccbadm-web:latest
+    image: jesse1983/ccbadm-web:dev
     command: npm start
     container_name: ccbadm-web
     volumes:
-      - ./ccbadm-web/src:/src
+      - ./ccbadm-web/:/app
     environment:
       PORT: 5000
+      ENV: development
     ports:
       - '5000:5000'
     depends_on:

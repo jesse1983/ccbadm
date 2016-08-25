@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="CCBApp">
+  <head ng-controller="HeadController">
+    <title ng-bind="title"></title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Projeto CCB ADM" name="description">
+    <link rel="stylesheet" href="css/build-8eeec5827a.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/icons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)" href="assets/images/icons/apple-touch-startup-image-1182x2208.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)" href="assets/images/icons/apple-touch-startup-image-1242x2148.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)" href="assets/images/icons/apple-touch-startup-image-1496x2048.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" href="assets/images/icons/apple-touch-startup-image-1536x2008.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)" href="assets/images/icons/apple-touch-startup-image-320x460.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" href="assets/images/icons/apple-touch-startup-image-640x1096.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" href="assets/images/icons/apple-touch-startup-image-640x920.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)" href="assets/images/icons/apple-touch-startup-image-748x1024.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="assets/images/icons/apple-touch-startup-image-750x1294.png">
+    <link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)" href="assets/images/icons/apple-touch-startup-image-768x1004.png">
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon-230x230.png" sizes="230x230">
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/images/icons/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/images/icons/coast-228x228.png" sizes="228x228">
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="assets/images/icons/manifest.json">
+    <link rel="shortcut icon" href="assets/images/icons/favicon.ico">
+    <link rel="yandex-tableau-widget" href="assets/images/icons/yandex-browser-manifest.json">
+    <meta property="og:image" content="assets/images/icons/open-graph.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#24bb9a">
+    <meta name="msapplication-TileImage" content="assets/images/icons/mstile-144x144.png">
+    <meta name="msapplication-config" content="assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#24bb9a"><!-- iPhone 5 -->
+    <link href="assets/images/startup_1.png" rel="apple-touch-startup-image"><!-- iPhone 6 -->
+    <link href="assets/images/startup_2.png" media="(device-width: 375px) and (device-height: 667px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"><!-- iPhone 6+ Portrait -->
+    <link href="assets/images/startup_3.png" media="(device-width: 414px) and (device-height: 736px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image"><!-- iPhone 6+ Landscape -->
+    <link href="assets/images/startup_4.png" media="(device-width: 414px) and (device-height: 736px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image">
+  </head>
+  <body ng-controller="NavController">
+    <style>
+      body{
+        margin: 0;
+        padding: 0;
+      }
+      .startup{
+        background: url('assets/images/icons/apple-touch-icon.png') no-repeat center center #24bb9a;
+        width: 100%;
+        position: absolute;
+        z-index: 1000000;
+        text-align: center;
+      }
+    </style>
+    <div ng-show="false" class="startup nga-fast nga-squash-vertical-move"></div>
+    <script type: text/javascript>
+      s = document.getElementsByClassName("startup");
+      s[0].style.height = window.innerHeight + "px";
+    </script>
+    <header ng-show="$root.login &amp;&amp; menuOpened" class="vertical hidden-print">
+      <div class="container-fluid left-nav">
+        <div class="row">
+          <nav ng-show="$root.login &amp;&amp; menuOpened" role="navigation" class="nav nav-stacked navbar-inverse left-nav col-xs-12 col-sm-4 col-md-3 nga-fast nga-stagger nga-slide-up">
+            <div class="navbar-login">
+              <button ng-click="menuOpened = null" type="button" class="close"><span>×</span></button><span ng-bind="$root.login.first_name + ' ' + $root.login.last_name"></span>
+            </div>
+            <ul class="nav">
+              <li><a href="/#/properties" ng-click="menuOpened = null">Imóveis</a></li>
+              <li><a href="/#/requests" ng-click="menuOpened = null">Retiradas</a></li>
+              <li ng-show="$root.can('read','User')"><a href="/#/users" ng-click="menuOpened = null">Usuários</a></li>
+              <li><a href="/#/logout" ng-click="menuOpened = null">Sair do CCB ADM</a></li>
+            </ul>
+          </nav>
+          <div ng-click="menuOpened = null" class="right-nav hidden-xs col-sm-8 col-md-9"></div>
+        </div>
+      </div>
+    </header>
+    <header ng-show="$root.login" class="horizontal hidden-print">
+      <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+        <div ng-hide="showSearch" class="nga-fast nga-stagger nga-rotate-down">
+          <ul class="nav navbar-nav navbar-left pull-left">
+            <li ng-show="!$root.nav.back"><a href="javascript:;" ng-click="menuOpened = true"><i class="fa fa-bars"></i></a></li>
+            <li ng-show="$root.nav.back"><a href="javascript:;" ng-click="back()"><i class="fa fa-chevron-left"></i><span class="hidden-xs">{{$root.nav.back.title}}</span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right pull-right">
+            <li ng-show="!$root.nav.button"><a href="javascript:" ng-click="showSearch = true"><i class="fa fa-search"></i></a></li>
+            <li ng-show="$root.nav.button"><a href="javascript:" ng-bind="$root.nav.button.label" ng-click="$root.nav.button.action()"></a></li>
+          </ul>
+          <div ng-bind="$root.nav.current.title" class="navbar-brand"></div>
+        </div>
+        <div ng-show="showSearch" class="nga-fast nga-stagger nga-rotate-up">
+          <form name="formSearch" ng-submit="submitSearch(formSearch.$valid)" novalidate="" role="search" class="form-search">
+            <div class="form-group">
+              <div class="input-group">
+                <input maxlength="64" ng-blur="showSearch = false" ng-model="formSearch.q" placeholder="Buscar imóvel" required="" type="search" set-focus="showSearch" class="form-control"><span class="input-group-btn">
+                  <button type="submit" class="btn"><span class="fa fa-search"></span></button>
+                  <button ng-click="showSearch = false" class="btn"><span class="fa fa-times"></span></button></span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </header>
+    <div ng-view="" class="content nga-fast nga-stagger nga-squash-left"></div>
+  </body>
+  <script src="js/build-dc7d60c7e9.js"></script>
+  
+</html>

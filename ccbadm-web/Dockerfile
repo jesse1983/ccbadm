@@ -1,9 +1,9 @@
 FROM node:4.2.1
-RUN mkdir -p /src
-WORKDIR /src
-COPY src/index.js /src/
-COPY src/package.json /src/
-COPY src/public /src/public
+ENV APP_HOME /app
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
+COPY package.json $APP_HOME
 RUN npm install --production && npm install supervisor -g
+COPY . $APP_HOME
 EXPOSE 5000
 CMD ["npm", "start"]
