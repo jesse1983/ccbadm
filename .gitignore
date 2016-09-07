@@ -82,7 +82,7 @@ jspm_packages
 /spec/examples.txt
 /test/tmp/
 /test/version_tmp/
-/tmp/
+*/tmp/
 
 # Used by dotenv library to load environment variables.
 # .env
@@ -128,13 +128,13 @@ build-iPhoneSimulator/
 *.rbc
 capybara-*.html
 .rspec
-/log
-/tmp
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/public/system
-/coverage/
-/spec/tmp
+**/log
+**/tmp
+**/db/*.sqlite3
+**/db/*.sqlite3-journal
+**/public/system
+**/coverage/
+**/spec/tmp
 **.orig
 rerun.txt
 pickle-email-*.html
@@ -169,3 +169,6 @@ bower.json
 
 # Ignore Byebug command history file.
 .byebug_history
+
+
+
