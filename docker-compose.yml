@@ -17,7 +17,7 @@ services:
     container_name: ccbadm-cache
   api:
     image: jesse1983/ccbadm-api:latest
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: rails s -p 3000 -b '0.0.0.0'
     # command: puma config.ru -p 3000
     container_name: ccbadm-api
     volumes:
@@ -35,6 +35,7 @@ services:
       - cache
     stdin_open: true
     tty: true
+    restart: always
   web:
     image: jesse1983/ccbadm-web:dev
     command: npm start

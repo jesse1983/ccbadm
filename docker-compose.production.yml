@@ -14,9 +14,11 @@ services:
       - POSTGRES_PASSWORD=ot_VVsYskexKUWUb88gZdMWbd9
     ports:
       - '5432:5432'
+    restart: always
   cache:
     image: memcached
     container_name: ccbadm-cache
+    restart: always
   api:
     image: jesse1983/ccbadm-api:latest
     command: bundle exec puma -C config/puma.rb
@@ -37,6 +39,7 @@ services:
       - cache
     stdin_open: true
     tty: true
+    restart: always
   web:
     image: jesse1983/ccbadm-web:latest
     command: npm start
@@ -49,3 +52,4 @@ services:
       - '80:80'
     depends_on:
       - api
+    restart: always

@@ -1,3 +1,8 @@
+Create schedule jobs for
+  - docker exec -it ccbadm-api rake clean_tokens
+  - docker exec -it ccbadm-api rake orphans_attachments
+  - docker exec -it ccbadm-api rake update_active_requests_count
+
 Mudar as cores
 
 - Subir mais que um arquivo (attachment) no mesmo documento

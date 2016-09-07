@@ -1,0 +1,1 @@
+pg_dump --dbname=postgresql://postgres:ot_VVsYskexKUWUb88gZdMWbd9@52.67.130.62:5432/ccbadm > temp/dump.sql
