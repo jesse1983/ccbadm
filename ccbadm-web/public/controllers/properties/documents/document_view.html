@@ -92,7 +92,7 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button type="button" ng-click="vm.RemoveDocument(vm.document)" ng-if="vm.isAutoStatus(vm.document)" class="btn btn-danger">Marcar como ausente</button>
-  <button type="button" ng-click="vm.SaveDocument(vm.document)" ng-disabled="vm.saving" class="btn btn-success">Salvar</button>
+  <button type="button" ng-click="vm.RemoveDocument(vm.document)" ng-if="vm.isAutoStatus(vm.document) &amp;&amp; vm.document.attachments &lt; 1" class="btn btn-danger">Marcar como ausente</button>
   <button type="button" ng-click="vm.ModalCancel()" class="btn btn-default">Fechar</button>
+  <button type="button" ng-click="vm.SaveDocument(vm.document)" ng-disabled="vm.saving || vm.upl" class="btn btn-success">Salvar</button>
 </div>
