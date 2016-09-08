@@ -34,7 +34,8 @@ PropertyController = ($scope,$routeParams,$location,ApiFactory,$rootScope,$uibMo
 
 	$scope.GetStatuses = ->
 		if $scope.ready
-			CacheFactory.get 'DocumentService::groupByStatus'
+			cache_key = "DocumentService::groupByStatus(#{$scope.property.id})"
+			CacheFactory.get cache_key
 		else
 			null
 

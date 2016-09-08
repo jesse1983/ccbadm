@@ -41,7 +41,9 @@ class Document < ActiveRecord::Base
 		if self.status_id
 			status = Status.find status_id
 			self.is_active = status.is_active
-			self.status_id = "DOC_UPLOADED" if status.is_active && self.attachments.size > 0
+			if self.attachments.size > 0
+				self.status_id = "DOC_UPLOADED"
+			end
 			if self.expires_at_changed?
 				unless self.expires_at.nil?
 					self.status_id = "DOC_AVAILABLE" if self.expires_at > Time.now
@@ -54,7 +56,14 @@ class Document < ActiveRecord::Base
 			end
 		end
 	end
-
+	def self.after_remove_attachments
+		Document.where(status_id: "DOC_UPLOADED").each do |d|
+			if d.attachments.size < 1 && d.status_id == "DOC_UPLOADED"
+				d.status_id = "DOC_AVAILABLE"
+				d.save
+			end
+		end
+	end
 	def self.update_active_requests_count
 		Document.where("active_requests_count > 0").each do |doc|
 			doc.active_requests_count = doc.requests.where(is_active: true).size

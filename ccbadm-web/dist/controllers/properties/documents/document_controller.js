@@ -131,8 +131,14 @@ DocumentController = (function() {
           };
         })(this)).success((function(_this) {
           return function(json, status, headers, config) {
+            var ref;
             _this.upl = null;
             _this.document.attachments = [];
+            _this.document.attachments_count++;
+            if ((ref = _this.document.status_id) !== "/api/statuses/DOC_EXPIRED") {
+              _this.document.status = '/api/statuses/DOC_UPLOADED';
+              _this.document.status_id = 'DOC_UPLOADED';
+            }
             return _this.document.attachments.push(json.data);
           };
         })(this)));
@@ -158,9 +164,14 @@ DocumentController = (function() {
           return att.$delete({
             id: attachment.id
           }, function() {
+            var ref;
             _this.loading = null;
             _this.document.attachments = [];
-            return _this.document.attachments_count = 0;
+            _this.document.attachments_count = 0;
+            if ((ref = _this.document.status) !== "/api/statuses/DOC_EXPIRED") {
+              _this.document.status = '/api/statuses/DOC_AVAILABLE';
+              return _this.document.status_id = 'DOC_AVAILABLE';
+            }
           });
         }
       };

@@ -63,12 +63,12 @@ angular.module("CCBApp").factory("ApiFactory", [
       Attachment: function() {
         return $resource(source + "/attachments/:id", {
           id: '@id'
-        }, config(true));
+        }, config(false));
       },
       Church: function() {
         return $resource(source + "/churches/:id", {
           id: '@id'
-        }, config(true));
+        }, config(false));
       },
       Document: function() {
         return $resource(source + "/documents/:id", {
@@ -86,7 +86,7 @@ angular.module("CCBApp").factory("ApiFactory", [
       Property: function() {
         return $resource(source + "/properties/:id", {
           id: '@id'
-        }, config(true));
+        }, config(false));
       },
       Profile: function() {
         return $resource(source + "/profiles/:id", {
@@ -106,7 +106,7 @@ angular.module("CCBApp").factory("ApiFactory", [
       Comment: function() {
         return $resource(source + "/comments/:id", {
           id: '@id'
-        }, config(true));
+        }, config(false));
       },
       User: function() {
         return $resource(source + "/users/:id", {

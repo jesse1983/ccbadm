@@ -115,6 +115,6 @@
 
 
 .modal-footer
-	button.btn.btn-danger(type='button', ng-click='vm.RemoveDocument(vm.document)' ng-if="vm.isAutoStatus(vm.document)") Marcar como ausente
-	button.btn.btn-success(type='button', ng-click='vm.SaveDocument(vm.document)' ng-disabled="vm.saving") Salvar
+	button.btn.btn-danger(type='button', ng-click='vm.RemoveDocument(vm.document)' ng-if="vm.isAutoStatus(vm.document) && vm.document.attachments < 1") Marcar como ausente
 	button.btn.btn-default(type='button', ng-click='vm.ModalCancel()') Fechar
+	button.btn.btn-success(type='button', ng-click='vm.SaveDocument(vm.document)' ng-disabled="vm.saving || vm.upl") Salvar

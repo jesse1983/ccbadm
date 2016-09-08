@@ -44,16 +44,16 @@ angular
 		methods =
 			Set: (value)->
 				headers.Authorization = value
-			Attachment: -> $resource("#{source}/attachments/:id", {id: '@id'}, config(true))
-			Church: -> $resource("#{source}/churches/:id", {id: '@id'}, config(true))
+			Attachment: -> $resource("#{source}/attachments/:id", {id: '@id'}, config(false))
+			Church: -> $resource("#{source}/churches/:id", {id: '@id'}, config(false))
 			Document: -> $resource("#{source}/documents/:id", {id: '@id'}, config(false))
 			DocumentType: -> $resource("#{source}/document_types/:id", {id: '@id'}, config(true))
 			Login: -> $resource("#{source}/login", {}, config(false))
-			Property: -> $resource("#{source}/properties/:id", {id: '@id'}, config(true))
+			Property: -> $resource("#{source}/properties/:id", {id: '@id'}, config(false))
 			Profile: -> $resource("#{source}/profiles/:id", {id: '@id'}, config(true))
 			Request: -> $resource("#{source}/requests/:id", {id: '@id'}, config(false))
 			Status: -> $resource("#{source}/statuses/:id", {id: '@id'}, config(true))
-			Comment: -> $resource("#{source}/comments/:id", {id: '@id'}, config(true))
+			Comment: -> $resource("#{source}/comments/:id", {id: '@id'}, config(false))
 			User: -> $resource("#{source}/users/:id", {id: '@id'}, config(false))
 		return methods
 	]

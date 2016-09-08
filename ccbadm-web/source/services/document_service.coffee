@@ -14,11 +14,12 @@ class DocumentService
 		return deferred.promise
 
 	groupByStatus: (statuses, search)->
+		cache_key = "DocumentService::groupByStatus(#{search.documentable_id_eq})"
 		deferred = @q.defer()
 		search.limit = search.limit || 50
 		search.expand = search.expand || "document_type"
-		if @CacheFactory.get 'DocumentService::groupByStatus'
-			deferred.resolve @CacheFactory.get('DocumentService::groupByStatus')
+		if @CacheFactory.get cache_key
+			deferred.resolve @CacheFactory.get(cache_key)
 		else
 			@ApiFactory.Document().query search, (json) =>
 				for i of json.data
@@ -29,12 +30,14 @@ class DocumentService
 						if statuses[s].url is json.data[i].status
 							statuses[s].documents = [] unless statuses[s].documents?
 							statuses[s].documents.push json.data[i]
-				@CacheFactory.set('DocumentService::groupByStatus', statuses)
+				@CacheFactory.set(cache_key, statuses)
 				deferred.resolve statuses
 		return deferred.promise
 
 	recreateGroup: (doc)->
-		statuses = @CacheFactory.get 'DocumentService::groupByStatus'
+		doc_property = doc.property.match(/(\d+)(?!.*\d)/g)[0]
+		cache_key = "DocumentService::groupByStatus(#{doc_property})"
+		statuses = @CacheFactory.get cache_key
 		if statuses
 			# Remove doc from group
 			for status,n in statuses
@@ -50,7 +53,7 @@ class DocumentService
 				if doc.status == status.url
 					status.documents.push doc
 
-			@CacheFactory.set('DocumentService::groupByStatus', statuses)
+			@CacheFactory.set(cache_key, statuses)
 		return
 
 DocumentService.$inject = ['$q', 'CacheFactory', 'ApiFactory']

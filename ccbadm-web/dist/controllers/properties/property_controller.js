@@ -46,8 +46,10 @@ PropertyController = function($scope, $routeParams, $location, ApiFactory, $root
     };
   })(this);
   $scope.GetStatuses = function() {
+    var cache_key;
     if ($scope.ready) {
-      return CacheFactory.get('DocumentService::groupByStatus');
+      cache_key = "DocumentService::groupByStatus(" + $scope.property.id + ")";
+      return CacheFactory.get(cache_key);
     } else {
       return null;
     }

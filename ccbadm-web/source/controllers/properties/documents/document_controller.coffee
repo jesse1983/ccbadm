@@ -1,5 +1,16 @@
 class DocumentController
-	constructor: ($scope, $rootScope, $uibModalInstance, prompt, Upload, CONSTANTS, current_document, statuses, ApiFactory, DocumentService)->
+	constructor: (
+		$scope,
+		$rootScope,
+		$uibModalInstance,
+		prompt,
+		Upload,
+		CONSTANTS,
+		current_document,
+		statuses,
+		ApiFactory,
+		DocumentService
+	)->
 		@scope = $scope
 		@rootScope = $rootScope
 		@uibModalInstance = $uibModalInstance
@@ -12,6 +23,7 @@ class DocumentController
 		@DocumentService = DocumentService
 		instance = new ApiFactory.Comment()
 		@comment = new instance()
+
 		$scope.$watch ()=>
 			@unformatted
 		, @SetExpiresAt
@@ -86,7 +98,12 @@ class DocumentController
 				.success (json, status, headers, config)=>
 					@upl = null
 					@document.attachments = []
+					@document.attachments_count++
+					if @document.status_id not in ["/api/statuses/DOC_EXPIRED"]
+						@document.status = '/api/statuses/DOC_UPLOADED'
+						@document.status_id = 'DOC_UPLOADED'
 					@document.attachments.push json.data
+
 
 	DestroyAttach: (attachment)->
 		@prompt
@@ -100,6 +117,10 @@ class DocumentController
 					@loading = null
 					@document.attachments = []
 					@document.attachments_count = 0
+					if @document.status not in ["/api/statuses/DOC_EXPIRED"]
+						@document.status = '/api/statuses/DOC_AVAILABLE'
+						@document.status_id = 'DOC_AVAILABLE'
+
 
 	GetBackRequest: (request)=>
 		request.returned_at = moment().format()
