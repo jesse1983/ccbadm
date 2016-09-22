@@ -18,7 +18,7 @@ DocumentController = (function() {
     this.DocumentService = DocumentService;
     instance = new ApiFactory.Comment();
     this.comment = new instance();
-    $scope.$watch((function(_this) {
+    this.scope.$watch((function(_this) {
       return function() {
         return _this.unformatted;
       };
@@ -102,7 +102,8 @@ DocumentController = (function() {
   };
 
   DocumentController.prototype.Upload = function(files) {
-    var file, i, j, len, results;
+    var file, i, j, len, results, upload_errors;
+    upload_errors = [];
     if ((files != null) && files.length) {
       results = [];
       for (i = j = 0, len = files.length; j < len; i = ++j) {
@@ -133,18 +134,29 @@ DocumentController = (function() {
           return function(json, status, headers, config) {
             var ref;
             _this.upl = null;
-            _this.document.attachments = [];
+            if (!_this.document.attachments) {
+              _this.document.attachments = [];
+            }
             _this.document.attachments_count++;
             if ((ref = _this.document.status_id) !== "/api/statuses/DOC_EXPIRED") {
               _this.document.status = '/api/statuses/DOC_UPLOADED';
               _this.document.status_id = 'DOC_UPLOADED';
             }
+            _this.document.attachments.map(function(i) {
+              return i.current = false;
+            });
+            json.data.current = true;
             return _this.document.attachments.push(json.data);
           };
         })(this)));
       }
       return results;
     }
+  };
+
+  DocumentController.prototype.ValidateUpload = function(files) {
+    console.log(files);
+    return true;
   };
 
   DocumentController.prototype.DestroyAttach = function(attachment) {
@@ -164,10 +176,14 @@ DocumentController = (function() {
           return att.$delete({
             id: attachment.id
           }, function() {
-            var ref;
+            var index, ref;
             _this.loading = null;
-            _this.document.attachments = [];
-            _this.document.attachments_count = 0;
+            index = _this.document.attachments.indexOf(attachment);
+            _this.document.attachments.splice(index);
+            _this.document.attachments_count--;
+            if (_this.document.attachments.length > 0) {
+              _this.document.attachments[0].current = true;
+            }
             if ((ref = _this.document.status) !== "/api/statuses/DOC_EXPIRED") {
               _this.document.status = '/api/statuses/DOC_AVAILABLE';
               return _this.document.status_id = 'DOC_AVAILABLE';
@@ -187,6 +203,50 @@ DocumentController = (function() {
       id: request.id
     }, request);
     return this.document;
+  };
+
+  DocumentController.prototype.NavAttach = function(act) {
+    var c, index;
+    c = _.where(this.document.attachments, {
+      current: true
+    })[0];
+    c.current = false;
+    index = this.document.attachments.indexOf(c);
+    if (act === 'next') {
+      if (index === this.document.attachments.length - 1) {
+        this.document.attachments[0].current = true;
+      } else {
+        this.document.attachments[index + 1].current = true;
+      }
+    } else {
+      if (index === 0) {
+        this.document.attachments[this.document.attachments.length - 1].current = true;
+      } else {
+        this.document.attachments[index - 1].current = true;
+      }
+    }
+  };
+
+  DocumentController.prototype.SetCurrentAttach = function(doc) {
+    if (doc.attachments) {
+      if (doc.attachments.length > 0) {
+        doc.attachments[0].current = true;
+      }
+    }
+    return console.log(doc.attachments);
+  };
+
+  DocumentController.prototype.RemoveDocument = function(doc) {
+    var attachment, j, len, ref, results;
+    this.document.status = '/api/statuses/DOC_NONE';
+    this.document.status_id = 'DOC_NONE';
+    ref = this.document.attachments;
+    results = [];
+    for (j = 0, len = ref.length; j < len; j++) {
+      attachment = ref[j];
+      results.push(this.DestroyAttach(attachment));
+    }
+    return results;
   };
 
   DocumentController.prototype.SaveDocument = function(doc) {

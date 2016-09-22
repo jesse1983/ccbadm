@@ -24,9 +24,10 @@ class DocumentController
 		instance = new ApiFactory.Comment()
 		@comment = new instance()
 
-		$scope.$watch ()=>
+		@scope.$watch ()=>
 			@unformatted
 		, @SetExpiresAt
+
 
 	GetExpiresAt: ->
 		try
@@ -76,6 +77,7 @@ class DocumentController
 			doc.comments_count--
 
 	Upload: (files)->
+		upload_errors = []
 		if files? and files.length
 			for file,i in files
 				@NgUpload.upload
@@ -97,13 +99,17 @@ class DocumentController
 
 				.success (json, status, headers, config)=>
 					@upl = null
-					@document.attachments = []
+					@document.attachments = [] unless @document.attachments
 					@document.attachments_count++
 					if @document.status_id not in ["/api/statuses/DOC_EXPIRED"]
 						@document.status = '/api/statuses/DOC_UPLOADED'
 						@document.status_id = 'DOC_UPLOADED'
+					@document.attachments.map (i) -> i.current = false
+					json.data.current = true
 					@document.attachments.push json.data
-
+	ValidateUpload: (files)->
+		console.log files
+		true
 
 	DestroyAttach: (attachment)->
 		@prompt
@@ -115,8 +121,10 @@ class DocumentController
 			if att?
 				att.$delete {id: attachment.id}, ()=>
 					@loading = null
-					@document.attachments = []
-					@document.attachments_count = 0
+					index = @document.attachments.indexOf(attachment)
+					@document.attachments.splice(index)
+					@document.attachments_count--
+					@document.attachments[0].current = true if @document.attachments.length > 0
 					if @document.status not in ["/api/statuses/DOC_EXPIRED"]
 						@document.status = '/api/statuses/DOC_AVAILABLE'
 						@document.status_id = 'DOC_AVAILABLE'
@@ -128,6 +136,34 @@ class DocumentController
 		instance = new @ApiFactory.Request()
 		instance.update({id: request.id}, request)
 		@document
+
+	NavAttach: (act)->
+		c = _.where(@document.attachments, {current: true})[0]
+		c.current = false
+		index = @document.attachments.indexOf(c)
+		if act == 'next'
+			if index == @document.attachments.length - 1
+				@document.attachments[0].current = true
+			else
+				@document.attachments[index + 1].current = true
+		else
+			if index == 0
+				@document.attachments[@document.attachments.length - 1].current = true
+			else
+				@document.attachments[index - 1].current = true
+		return
+
+	SetCurrentAttach: (doc)->
+		if doc.attachments
+			if doc.attachments.length > 0
+				doc.attachments[0].current = true
+		console.log doc.attachments
+
+	RemoveDocument: (doc)->
+		@document.status = '/api/statuses/DOC_NONE'
+		@document.status_id = 'DOC_NONE'
+		for attachment in @document.attachments
+			@DestroyAttach(attachment)
 
 
 	SaveDocument: (doc)->

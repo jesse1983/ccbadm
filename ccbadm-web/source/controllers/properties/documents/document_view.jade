@@ -4,6 +4,7 @@
 	h1.text-center(ng-if="!vm.document.document_type")
 		i.fa.fa-cog.fa-spin.fa-5
 	.row(ng-if="vm.document.document_type")
+		div(ng-init="vm.SetCurrentAttach(vm.document)")
 		.col-sm-8.col-xs-12.blocker
 			.section
 				.legend
@@ -99,6 +100,8 @@
 							ngf-drag-over-class='dragover'
 							ngf-allow-dir='true'
 							ngf-accept="'.jpg,.png,.pdf'"
+							ngf-validate="{size: {min: 10, max: '5MB'}"
+							ngf-validate-fn="vm.ValidateUpload($files)"
 							style='height: 100px; padding-top: 30px'
 						)
 							span(ng-show='!vm.upl')
@@ -107,10 +110,29 @@
 								| os arquivos aqui
 							span(ng-show='vm.upl', ng-bind='vm.upl.percent')
 						div(ngf-no-file-drop='') Não é possível subir arquivos nesse browser
-					.text-center(ng-show='vm.document.attachments.length > 0', ng-repeat='attachment in vm.document.attachments')
-						img.img-responsive.img-rounded(cloudinary='w_400,h_500,c_fill', cl-src='{{attachment.attachment}}', height='500')
-						a.btn.btn-link(href='{{attachment.attachment}}', download='') Download
-						button.btn.btn-link(ng-click='vm.DestroyAttach(attachment)', ng-show="$root.can('destroy','Attachment')") Excluir
+					.text-center(ng-show='vm.document.attachments.length > 0')
+						button.btn.btn-default(ng-click="vm.NavAttach('prev')" ng-show="vm.document.attachments.length > 1")
+							i.fa.fa-chevron-left
+						button.btn.btn-primary(
+							ngf-select='vm.Upload($files)'
+							ngf-allow-dir='true'
+							ngf-accept="'.jpg,.png,.pdf'"
+							ngf-validate="{size: {min: 10, max: '5MB'}"
+							ngf-validate-fn="vm.ValidateUpload($files)"
+							ng-disabled="vm.upl"
+						)
+							span(ng-show='!vm.upl') Enviar mais
+							span(ng-show='vm.upl') Enviando...
+						button.btn.btn-default(ng-click="vm.NavAttach('next')" ng-show="vm.document.attachments.length > 1")
+							i.fa.fa-chevron-right
+						.text-center(ng-show="vm.document.attachments.length > 1")
+							small(ng-repeat="circle in vm.document.attachments")
+								i.fa(ng-class="circle.current ? 'fa-circle' : 'fa-circle-thin'")
+								| &nbsp;
+						div(ng-repeat='attachment in vm.document.attachments' ng-show="attachment.current")
+							img.img-responsive.img-rounded(cloudinary='w_400,h_500,c_fill', cl-src='{{attachment.attachment}}', height='500')
+							a.btn.btn-link(href='{{attachment.attachment}}', download='') Download
+							button.btn.btn-link(ng-click='vm.DestroyAttach(attachment)', ng-show="$root.can('destroy','Attachment')") Excluir
 
 
 

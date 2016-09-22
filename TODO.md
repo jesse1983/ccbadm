@@ -3,11 +3,10 @@ Create schedule jobs for
   - docker exec -it ccbadm-api rake orphans_attachments
   - docker exec -it ccbadm-api rake update_active_requests_count
 
-Mudar as cores
 
-- Subir mais que um arquivo (attachment) no mesmo documento
 
-- 	- O 3.2 ART da anexação
+- Novos documentos
+	- O 3.2 ART da anexação
 	- O 4.1 ART da edificação
 	- O 4.3 Alvará de aprovação da obra
 	- O 8.1 Registro de propriedade
@@ -22,7 +21,7 @@ Mudar as cores
 	- Vistoria de Bombeiro AVCB
 	- Atestado de brigada
 
-3 Documentos que precisam de atualização
+- Documentos que precisam de atualização
 	- Atestado de brigadada
 	- Vistoria de Bombeiro CLCB
 	- Vistoria de Bombeiro AVCB
@@ -30,7 +29,7 @@ Mudar as cores
 
 	Coloca-la como vermelho quando estiver vencendo
 
-Retirar números e mudar o sistema de busca'
+
 
 
 
@@ -55,3 +54,9 @@ SER PREENCHIDOS PELO PATRIMONIO
 
 10- TAMBEM NA CAPA CONSTAM TICADOS DOCUMENTOS QUE NÃO ESTÃO SEQUER COM STATUS DE
 PRESENTE - SOMENTE DEVEM APARECER SE REALMENTE FOR INFORMADO SUA EXISTENCIA
+
+- Limitar o upload com tamanho de arquivos
+
+- Tranformar comentário das retiradas como comentário do documento
+
+- Criar link com documentos vencidos

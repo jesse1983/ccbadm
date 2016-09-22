@@ -20,7 +20,7 @@ class Api::AttachmentsController < Api::ApiController
 	def create
 		@object = Attachment.new get_params
 		if @object.save
-			Attachment.where("attachable_id = ? and attachable_type = ? AND id != ?",@object.attachable_id,@object.attachable_type,@object.id).delete_all
+			# Attachment.where("attachable_id = ? and attachable_type = ? AND id != ?",@object.attachable_id,@object.attachable_type,@object.id).delete_all
 			@object.attachable_type.constantize.reset_counters @object.attachable_id, :attachments
 			render :template => "api/#{controller_name}/show"
 		else
