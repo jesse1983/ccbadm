@@ -122,12 +122,14 @@ class DocumentController
 				att.$delete {id: attachment.id}, ()=>
 					@loading = null
 					index = @document.attachments.indexOf(attachment)
-					@document.attachments.splice(index)
+					@document.attachments.splice(index, 1)
 					@document.attachments_count--
-					@document.attachments[0].current = true if @document.attachments.length > 0
-					if @document.status not in ["/api/statuses/DOC_EXPIRED"]
-						@document.status = '/api/statuses/DOC_AVAILABLE'
-						@document.status_id = 'DOC_AVAILABLE'
+					if @document.attachments.length > 0
+						@document.attachments[0].current = true
+					else
+						if @document.status not in ["/api/statuses/DOC_EXPIRED"]
+							@document.status = '/api/statuses/DOC_AVAILABLE'
+							@document.status_id = 'DOC_AVAILABLE'
 
 
 	GetBackRequest: (request)=>
@@ -157,7 +159,7 @@ class DocumentController
 		if doc.attachments
 			if doc.attachments.length > 0
 				doc.attachments[0].current = true
-		console.log doc.attachments
+		true
 
 	RemoveDocument: (doc)->
 		@document.status = '/api/statuses/DOC_NONE'

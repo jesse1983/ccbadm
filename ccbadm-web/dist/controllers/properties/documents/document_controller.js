@@ -179,14 +179,15 @@ DocumentController = (function() {
             var index, ref;
             _this.loading = null;
             index = _this.document.attachments.indexOf(attachment);
-            _this.document.attachments.splice(index);
+            _this.document.attachments.splice(index, 1);
             _this.document.attachments_count--;
             if (_this.document.attachments.length > 0) {
-              _this.document.attachments[0].current = true;
-            }
-            if ((ref = _this.document.status) !== "/api/statuses/DOC_EXPIRED") {
-              _this.document.status = '/api/statuses/DOC_AVAILABLE';
-              return _this.document.status_id = 'DOC_AVAILABLE';
+              return _this.document.attachments[0].current = true;
+            } else {
+              if ((ref = _this.document.status) !== "/api/statuses/DOC_EXPIRED") {
+                _this.document.status = '/api/statuses/DOC_AVAILABLE';
+                return _this.document.status_id = 'DOC_AVAILABLE';
+              }
             }
           });
         }
@@ -233,7 +234,7 @@ DocumentController = (function() {
         doc.attachments[0].current = true;
       }
     }
-    return console.log(doc.attachments);
+    return true;
   };
 
   DocumentController.prototype.RemoveDocument = function(doc) {

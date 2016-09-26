@@ -81,12 +81,12 @@
         <div class="legend"><i class="fa fa-paperclip"></i> Digitalização</div>
         <div class="form-group">
           <div ng-show="vm.document.attachments.length &lt; 1 &amp;&amp; $root.can('create','Attachment')">
-            <div ngf-drop="vm.Upload($files)" ngf-select="vm.Upload($files)" ngf-drag-over-class="dragover" ngf-allow-dir="true" ngf-accept="'.jpg,.png,.pdf'" ngf-validate="{size: {min: 10, max: '5MB'}" ngf-validate-fn="vm.ValidateUpload($files)" style="height: 100px; padding-top: 30px" class="drop-box palette palette-clouds"><span ng-show="!vm.upl">Clique ou arraste<br/>os arquivos aqui</span><span ng-show="vm.upl" ng-bind="vm.upl.percent"></span></div>
+            <div ngf-drop="vm.Upload($files)" ngf-select="vm.Upload($files)" ngf-drag-over-class="dragover" ngf-allow-dir="true" ngf-accept="'.jpg,.png,.pdf'" ngf-multiple="true" ngf-validate="{size: {min: 10, max: '5MB'}" ngf-validate-fn="vm.ValidateUpload($files)" style="height: 100px; padding-top: 30px" class="drop-box palette palette-clouds"><span ng-show="!vm.upl">Clique ou arraste<br/>os arquivos aqui</span><span ng-show="vm.upl" ng-bind="vm.upl.percent"></span></div>
             <div ngf-no-file-drop="">Não é possível subir arquivos nesse browser</div>
           </div>
           <div ng-show="vm.document.attachments.length &gt; 0" class="text-center">
             <button ng-click="vm.NavAttach('prev')" ng-show="vm.document.attachments.length &gt; 1" class="btn btn-default"><i class="fa fa-chevron-left"></i></button>
-            <button ngf-select="vm.Upload($files)" ngf-allow-dir="true" ngf-accept="'.jpg,.png,.pdf'" ngf-validate="{size: {min: 10, max: '5MB'}" ngf-validate-fn="vm.ValidateUpload($files)" ng-disabled="vm.upl" class="btn btn-primary"><span ng-show="!vm.upl">Enviar mais</span><span ng-show="vm.upl">Enviando...</span></button>
+            <button ngf-select="vm.Upload($files)" ngf-allow-dir="true" ngf-accept="'.jpg,.png,.pdf'" ngf-multiple="true" ngf-validate="{size: {min: 10, max: '5MB'}" ngf-validate-fn="vm.ValidateUpload($files)" ng-disabled="vm.upl" class="btn btn-primary"><span ng-show="!vm.upl">Enviar mais</span><span ng-show="vm.upl">Enviando...</span></button>
             <button ng-click="vm.NavAttach('next')" ng-show="vm.document.attachments.length &gt; 1" class="btn btn-default"><i class="fa fa-chevron-right"></i></button>
             <div ng-show="vm.document.attachments.length &gt; 1" class="text-center"><small ng-repeat="circle in vm.document.attachments"><i ng-class="circle.current ? 'fa-circle' : 'fa-circle-thin'" class="fa"></i>&nbsp;</small></div>
             <div ng-repeat="attachment in vm.document.attachments" ng-show="attachment.current"><img cloudinary="w_400,h_500,c_fill" cl-src="{{attachment.attachment}}" height="500" class="img-responsive img-rounded"/><a href="{{attachment.attachment}}" download="" class="btn btn-link">Download</a>

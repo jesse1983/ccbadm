@@ -100,6 +100,7 @@
 							ngf-drag-over-class='dragover'
 							ngf-allow-dir='true'
 							ngf-accept="'.jpg,.png,.pdf'"
+							ngf-multiple="true"
 							ngf-validate="{size: {min: 10, max: '5MB'}"
 							ngf-validate-fn="vm.ValidateUpload($files)"
 							style='height: 100px; padding-top: 30px'
@@ -117,6 +118,7 @@
 							ngf-select='vm.Upload($files)'
 							ngf-allow-dir='true'
 							ngf-accept="'.jpg,.png,.pdf'"
+							ngf-multiple="true"
 							ngf-validate="{size: {min: 10, max: '5MB'}"
 							ngf-validate-fn="vm.ValidateUpload($files)"
 							ng-disabled="vm.upl"
