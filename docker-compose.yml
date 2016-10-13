@@ -1,51 +1,65 @@
 version: '2'
 services:
-  db:
-    image: postgres
-    container_name: ccbadm-db
-    # user: "root"
+  # db:
+  #   image: postgres
+  #   container_name: ccbadm-db
+  #   # user: "root"
+  #   volumes:
+  #     - /data/ccbadm-db:/var/lib/postgresql/data/pgdata
+  #   environment:
+  #     - PGDATA=/var/lib/postgresql/data/pgdata
+  #     - PGUSER=postgres
+  #     - POSTGRES_DB=d4ulqlkckanfe2
+  #   ports:
+  #     - '5432:5432'
+  # cache:
+  #   image: memcached
+  #   container_name: ccbadm-cache
+  # api:
+  #   image: jesse1983/ccbadm-api:latest
+  #   command: rails s -p 3000 -b '0.0.0.0'
+  #   # command: puma config.ru -p 3000
+  #   container_name: ccbadm-api
+  #   volumes:
+  #     - ./ccbadm-api:/app/
+  #   environment:
+  #     RAILS_ENV: development
+  #     DATABASE_NAME: d4ulqlkckanfe2
+  #     DATABASE_HOST: ccbadm-db
+  #     DATABASE_USERNAME: postgres
+  #     MEMCACHED_URL: "ccbadm-cache:11211"
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - db
+  #     - cache
+  #   stdin_open: true
+  #   tty: true
+  #   restart: always
+  # web:
+  #   image: jesse1983/ccbadm-web:dev
+  #   command: npm start
+  #   container_name: ccbadm-web
+  #   volumes:
+  #     - ./ccbadm-web/:/app
+  #   environment:
+  #     PORT: 5000
+  #     ENV: development
+  #   ports:
+  #     - '5000:5000'
+  #   depends_on:
+  #     - api
+  react:
+    image: jesse1983/ccbadm-react:latest
+    command: bash -c 'npm i && npm start'
+    # command: supervisor server.es
+    container_name: ccbadm-react
     volumes:
-      - /data/ccbadm-db:/var/lib/postgresql/data/pgdata
+      - ./ccbadm-react/:/app
+      - /app/node_modules
     environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      - PGUSER=postgres
-      - POSTGRES_DB=d4ulqlkckanfe2
-    ports:
-      - '5432:5432'
-  cache:
-    image: memcached
-    container_name: ccbadm-cache
-  api:
-    image: jesse1983/ccbadm-api:latest
-    command: rails s -p 3000 -b '0.0.0.0'
-    # command: puma config.ru -p 3000
-    container_name: ccbadm-api
-    volumes:
-      - ./ccbadm-api:/app/
-    environment:
-      RAILS_ENV: development
-      DATABASE_NAME: d4ulqlkckanfe2
-      DATABASE_HOST: ccbadm-db
-      DATABASE_USERNAME: postgres
-      MEMCACHED_URL: "ccbadm-cache:11211"
-    ports:
-      - '3000:3000'
-    depends_on:
-      - db
-      - cache
-    stdin_open: true
-    tty: true
-    restart: always
-  web:
-    image: jesse1983/ccbadm-web:dev
-    command: npm start
-    container_name: ccbadm-web
-    volumes:
-      - ./ccbadm-web/:/app
-    environment:
-      PORT: 5000
+      PORT: 5999
       ENV: development
+      NODE_PATH: /app
     ports:
-      - '5000:5000'
-    depends_on:
-      - api
+      - '5999:5999'

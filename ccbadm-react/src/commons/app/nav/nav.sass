@@ -1,0 +1,46 @@
+.vertical
+  background: rgba(0,0,0,0.4)
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100vh
+  height: 100%
+  z-index: 2000
+  opacity: 1
+  overflow: hidden
+  .row
+    display: flex
+    height: 100%
+    margin-left: -15px
+  nav
+    padding: 15px 20px 15px 20px
+    .navbar-login
+      color: #FFF
+
+  // Start
+  &.vertical-enter
+    opacity: 0.01
+    .row
+      margin-left: -100vw
+
+    &.vertical-enter-active
+      transition: opacity 200ms ease
+      opacity: 1
+      .row
+        margin-left: -15px
+        transition: margin 500ms ease
+
+  // End
+  &.vertical-leave
+    opacity: 1
+    .row
+      margin-left: -15px
+
+    &.vertical-leave-active
+      transition: opacity 300ms ease
+      opacity: 0.01
+      .row
+        margin-left: -100vw
+        transition: margin 300ms ease
+
