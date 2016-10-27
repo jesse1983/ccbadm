@@ -51,15 +51,16 @@ services:
   #     - api
   react:
     image: jesse1983/ccbadm-react:latest
-    command: bash -c 'npm i && npm start'
-    # command: supervisor server.es
+    # command: bash -c "npm i && supervisor -e 'js,jsx'  -i 'node_modules' app.js"
+    command: npm start
     container_name: ccbadm-react
+    user: root
     volumes:
       - ./ccbadm-react/:/app
       - /app/node_modules
     environment:
       PORT: 5999
       ENV: development
-      NODE_PATH: /app
+      NODE_PATH: /app/node_modules
     ports:
       - '5999:5999'

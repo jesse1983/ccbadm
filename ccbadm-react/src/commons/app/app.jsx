@@ -3,17 +3,15 @@ const Nav = require('./nav/nav.jsx');
 const Bar = require('./bar.jsx');
 const appStore = require('./app.reflux').appStore;
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-const rca = require('../rca');
 
 if (process.browser) {
   /* eslint global-require: "off" */
   require('bootstrap/scss/bootstrap-flex.scss');
   require('designmodo-flat-ui/dist/css/flat-ui.css');
   require('font-awesome/css/font-awesome.css');
-  require('animate.css/animate.min.css');
+  require('./app.sass');
   /* eslint global-require: "always" */
 }
-
 class App extends React.Component {
   constructor() {
     super();
@@ -30,7 +28,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="app">
         <ReactCSSTransitionGroup
           transitionName="vertical"
           transitionEnterTimeout={500}
@@ -39,8 +37,10 @@ class App extends React.Component {
           {(this.state.menu) ? <Nav show={this.state.menu} /> : null}
         </ReactCSSTransitionGroup>
         <Bar />
-        <div className="content nga-fast nga-stagger nga-squash-left">
-          { this.props.children }
+        <div className="content">
+          <div className="container-fluid">
+            { this.props.children }
+          </div>
         </div>
       </div>
     );

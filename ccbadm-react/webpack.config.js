@@ -46,12 +46,12 @@ const pack = {
     ],
   },
   resolve: {
-    root: path.resolve('/app'),
-    modulesDirectories: ['/app/node_modules'],
+    root: path.resolve('./'),
+    modulesDirectories: ['./node_modules'],
     extensions: ['', '.js', '.jsx', '.json', 'css'],
   },
   resolveLoader: {
-    modulesDirectories: ['/app/node_modules'],
+    modulesDirectories: ['./node_modules'],
   },
   watchOptions: {
     aggregateTimeout: 300,

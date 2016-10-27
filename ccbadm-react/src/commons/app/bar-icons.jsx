@@ -9,7 +9,7 @@ class BarIcons extends React.Component {
   render() {
     return (
       <div>
-        <ul className="nav navbar-nav navbar-left pull-xs-left">
+        <ul className="nav navbar-nav float-xs-left">
           <li>
             <a href="" onClick={this.openMenu.bind(this)}>
               <i className="fa fa-bars" />
@@ -17,7 +17,7 @@ class BarIcons extends React.Component {
           </li>
           <li className="hidden-xs-up"><a><i className="fa fa-chevron-left" /></a></li>
         </ul>
-        <ul className="nav navbar-nav navbar-right pull-xs-right">
+        <ul className="nav navbar-nav float-xs-right">
           <li><a><i className="fa fa-search" /></a></li>
         </ul>
       </div>

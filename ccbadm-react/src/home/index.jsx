@@ -1,14 +1,16 @@
 const React = require('react');
+const DocumentTitle = require('react-document-title');
 const App = require('./../commons/app/app.jsx');
+const PropertyService = require('./../services/property.service.js');
+
 
 class Home extends React.Component {
-  componentDidMount() {
-    // document.title = 'Dashboard';
-  }
   render() {
     return (
       <App>
-        <h1>My First Component</h1>
+        <DocumentTitle title="Dashboard">
+          <h1>Dashboard</h1>
+        </DocumentTitle>
       </App>
     );
   }

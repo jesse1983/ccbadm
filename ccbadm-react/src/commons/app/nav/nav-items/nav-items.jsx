@@ -12,7 +12,10 @@ class NavItems extends React.Component {
     return (
       <ul className="nav  nav-pills nav-stacked">
         <li className="nav-item">
-          <Link className="nav-link" to="/" onClick={this.props.close.bind(this)}>Imóveis</Link>
+          <Link className="nav-link" to="/" onClick={this.props.close.bind(this)}>Home</Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/properties" onClick={this.props.close.bind(this)}>Imóveis</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/users" onClick={this.props.close.bind(this)}>Usuários</Link>
