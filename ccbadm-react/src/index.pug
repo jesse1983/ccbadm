@@ -3,6 +3,6 @@ html
     link(rel="stylesheet", href="bundle.css")
   body
     #app!= component
-    script(type="text/javascript" src="bundle.js")
     script.
-      window.dataReact = !{data}
+      window.dataApp = { route: '!{route}', data: !{data} };
+    script(type="text/javascript" src="bundle.js")

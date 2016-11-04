@@ -1,5 +1,6 @@
 const React = require('react');
-const auth = require('./../auth');
+const auth = require('./../../auth');
+const loginSchema = require('./../../services/login.schema');
 
 if (process.browser) {
   /* eslint global-require: "off" */
@@ -12,26 +13,34 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      error: false,
+      errors: {},
     };
-  }
-  componentDidMount() {
-    /* global document */
-    document.title = 'Login';
   }
   handle(ev) {
     const obj = {};
     obj[ev.target.id] = ev.target.value;
     this.setState(obj);
+    this.setState({ errors: {} });
   }
+
   close() {
-    this.setState({ error: false });
+    this.setState({ errors: {} });
   }
+
   authenticate(ev) {
     ev.preventDefault();
-    auth.login(this.state.email, this.state.password).catch((err) => {
-      this.setState({ error: err });
-    });
+    const login = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    if (loginSchema(login)) {
+      auth.login(this.state.email, this.state.password).catch((err) => {
+        this.setState({ errors: { message: err } });
+      });
+    } else {
+      this.setState({ errors: loginSchema.errors(login) });
+    }
   }
   render() {
     return (
@@ -46,7 +55,7 @@ class Login extends React.Component {
           <div className="login-form">
             <h1 className="text-center">Account</h1>
             <p className="text-center">Por favor, entre com seu e-mail e senha</p>
-            <div className="form-group">
+            <div className={(this.state.errors.email) ? 'form-group has-danger' : 'form-group'}>
               <input
                 id="email"
                 required=""
@@ -57,8 +66,11 @@ class Login extends React.Component {
                 className="form-control login-field"
               />
               <label htmlFor="email" className="login-field-icon fa fa-user" />
+              <div className="form-control-feedback">
+                {(this.state.errors.email) ? 'Preenha um e-mail válido' : ''}
+              </div>
             </div>
-            <div className="form-group">
+            <div className={(this.state.errors.password) ? 'form-group has-danger' : 'form-group'}>
               <input
                 id="password"
                 required=""
@@ -70,10 +82,14 @@ class Login extends React.Component {
                 className="form-control login-field"
               />
               <label htmlFor="password" className="login-field-icon fa fa-lock" />
+              <div className="form-control-feedback">
+                {(this.state.errors.password) ? 'Preenha sua senha' : ''}
+              </div>
+
             </div>
-            {(this.state.error) ?
+            {(this.state.errors.message) ?
               <div role="alert" className="alert alert-danger alert-dismissible">
-                {JSON.stringify(this.state.error)}
+                {this.state.errors.message}
                 <small className="ng-binding">
                   <button type="button" className="close" onClick={this.close.bind(this)}>
                     <span aria-hidden="true">×</span>
@@ -90,10 +106,5 @@ class Login extends React.Component {
     );
   }
 }
-
-Login.propTypes = {
-  email: React.PropTypes.string.isRequired,
-  password: React.PropTypes.string.isRequired,
-};
 
 module.exports = Login;

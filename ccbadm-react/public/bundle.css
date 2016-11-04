@@ -1,10 +1,3 @@
-.container-bar {
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center; }
-  .container-bar .login-form {
-    text-align: center; }
 .vertical {
   background: rgba(0, 0, 0, 0.4);
   position: fixed;
@@ -13679,6 +13672,17 @@ body {
   margin-top: 53px; }
   .content * {
     font-weight: 100; }
+.container-bar {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center; }
+  .container-bar .login-form {
+    text-align: center; }
+    .container-bar .login-form .form-control-feedback {
+      position: relative;
+      text-align: left;
+      margin-left: 20px; }
 .container-bar {
   height: 100vh;
   overflow: hidden;

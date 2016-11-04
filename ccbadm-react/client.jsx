@@ -4,23 +4,37 @@ const Router = require('react-router').Router;
 const Route = require('react-router').Route;
 const browserHistory = require('react-router').browserHistory;
 const Auth = require('./src/auth');
-
-const Login = require('./src/login/index');
-const Home = require('./src/home/index');
-const Properties = require('./src/properties/index');
-const Users = require('./src/users/index');
-const Logout = require('./src/logout/index');
-
+const routes = require('./routes');
 
 class App extends React.Component {
+  security(route, component) {
+    if (route.public) {
+      return (
+        <Route
+          key={route.path}
+          path={route.path}
+          component={component}
+        />
+      );
+    }
+    return (
+      <Route
+        key={route.path}
+        path={route.path}
+        component={component}
+        onEnter={Auth.requireAuth}
+      />
+    );
+  }
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/login" component={Login} />
-        <Route path="/" component={Home} onEnter={Auth.requireAuth} />
-        <Route path="/properties" component={Properties} onEnter={Auth.requireAuth} />
-        <Route path="/users" component={Users} onEnter={Auth.requireAuth} />
-        <Route path="/logout" component={Logout} onEnter={Auth.requireAuth} />
+        {Object.keys(routes).map((key) => {
+          /* eslint import/no-dynamic-require: 0 */
+          /* eslint global-require: 0 */
+          const component = require(`./src/components/${key}/index`);
+          return this.security(routes[key], component);
+        })}
       </Router>
     );
   }

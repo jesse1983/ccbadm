@@ -1,4 +1,3 @@
-const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const excludes = /(node_modules|bower_components)/;
@@ -46,7 +45,6 @@ const pack = {
     ],
   },
   resolve: {
-    root: path.resolve('./'),
     modulesDirectories: ['./node_modules'],
     extensions: ['', '.js', '.jsx', '.json', 'css'],
   },
@@ -55,7 +53,7 @@ const pack = {
   },
   watchOptions: {
     aggregateTimeout: 300,
-    poll: 9000,
+    poll: 1000,
   },
   plugins: [
     new ExtractTextPlugin('bundle.css'),

@@ -52,7 +52,7 @@ services:
   react:
     image: jesse1983/ccbadm-react:latest
     # command: bash -c "npm i && supervisor -e 'js,jsx'  -i 'node_modules' app.js"
-    command: npm start
+    command: bash -c 'yarn --ignore-engines && npm start'
     container_name: ccbadm-react
     user: root
     volumes:

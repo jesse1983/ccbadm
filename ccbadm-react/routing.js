@@ -15,22 +15,27 @@ class Routing {
     require('node-jsx').install({ harmony: true, extension: '.js' });
     let component = {};
     if (Auth.logged(req.cookies)) {
-      component = require(`./src/${compName}/index.jsx`);
+      component = require(`./src/components/${compName}/index.jsx`);
     } else {
-      component = require('./src/login/index.jsx');
+      component = require('./src/components/login/index.jsx');
     }
     const mainComponent = React.createFactory(component);
-    const jsx = ReactDOMServer.renderToStaticMarkup(mainComponent(params));
+    const jsx = ReactDOMServer.renderToStaticMarkup(mainComponent({ data: params }));
     const fn = pug.compile(fs.readFileSync('./src/index.pug'), {});
-    const html = fn({ component: jsx, data: JSON.stringify(params) });
+    const html = fn({
+      component: jsx,
+      data: JSON.stringify(params),
+      route: compName,
+    });
     return html;
   }
 
   static reactify(compName, req) {
     return new Promise((resolve, reject) => {
       if (routes[compName].service) {
-        const service = require(`./src/services/${routes[compName].service}.service`);
-        service[routes[compName].method]().then((result) => {
+        const serviceName = routes[compName].service;
+        const service = require(`./src/services/${serviceName}/${serviceName}.service`);
+        service[routes[compName].method](req.cookies.get('currentUser')).then((result) => {
           resolve(Routing.jsxify(compName, req, result));
         }, (err, value) => {
           reject(err, value);
@@ -44,7 +49,11 @@ class Routing {
   static mount() {
     Object.keys(routes).map((key) => {
       return Router.all(routes[key].path, function* generator() {
-        this.body = yield Routing.reactify(key, this);
+        if (Auth.logged(this.cookies)) {
+          this.body = yield Routing.reactify(key, this);
+        } else {
+          this.body = yield Routing.reactify('login', this);
+        }
       });
     });
     return Router;
