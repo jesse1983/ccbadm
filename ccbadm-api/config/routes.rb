@@ -112,6 +112,7 @@ Ccbonline::Application.routes.draw do
     resources :document_types, only: [:index,:show]
     resources :profiles, only: [:index,:show,:update]
     resources :properties, only: [:index]
+    resources :skills, only: [:index,:show]
     resources :statuses, only: [:index,:show]
     resources :users
 

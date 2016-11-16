@@ -1,0 +1,32 @@
+
+<div ng-if="vm.skills" class="container-fluid">
+  <h1>Perfis</h1>
+  <form>
+    <table style="table-layout: fixed;" class="table">
+      <thead>
+        <tr>
+          <th width="150px">Perfil</th>
+          <th ng-repeat="skill in vm.skill_names" width="{{ 100/vm.skills.length }}%">
+            <div style="overflow: hidden" ng-bind="skill"></div>
+          </th>
+          <th width="150px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="profile in vm.profiles">
+          <th ng-bind="profile.name">
+            <td ng-repeat="skill in vm.skill_names">
+              <div class="btn-group">
+                <button type="button" data-toggle="dropdown" class="btn btn-success dropdown-toggle">Large<span class="caret"></span></button>
+              </div>
+            </td>
+            <td><a href="href">ver usuários</a></td>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <div class="text-center">
+    <hr/><a href="href" class="btn btn-lg btn-success">Salvar</a>
+  </div>
+</div>

@@ -26,7 +26,7 @@ DocumentController = (function() {
   }
 
   DocumentController.prototype.GetExpiresAt = function() {
-    var date, e, error;
+    var date, e;
     try {
       date = new Date(this.document.expires_at);
       date = moment(date).format("DD/MM/YYYY");

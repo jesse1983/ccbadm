@@ -51,7 +51,6 @@ angular.module("CCBApp").factory("ApiFactory", [
           params: {
             id: "@id"
           },
-          method: "DELETE",
           isArray: false
         }
       };
@@ -97,6 +96,11 @@ angular.module("CCBApp").factory("ApiFactory", [
         return $resource(source + "/requests/:id", {
           id: '@id'
         }, config(false));
+      },
+      Skill: function() {
+        return $resource(source + "/skills/:id", {
+          id: '@id'
+        }, config(true));
       },
       Status: function() {
         return $resource(source + "/statuses/:id", {

@@ -1,7 +1,7 @@
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 angular.module('CCBApp').run(function($http, $cookieStore, ApiFactory, $rootScope, $location, $uibModalStack, $route, CONSTANTS) {
-  var auth_cookie, current_user, error, error1, myURL;
+  var auth_cookie, current_user, error, myURL;
   auth_cookie = $cookieStore.get("token");
   $http.defaults.headers.common;
   if (window.location.hash.indexOf("#/login") > -1) {

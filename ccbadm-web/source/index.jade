@@ -33,6 +33,9 @@ html(ng-app='CCBApp')
               li(ng-show="$root.can('read','User')")
                 a(href='/#/users', ng-click='menuOpened = null') Usuários
 
+              li(ng-show="$root.can('read','Profile')")
+                a(href='/#/profiles', ng-click='menuOpened = null') Perfis de acesso
+
               li
                 a(href='/#/logout', ng-click='menuOpened = null') Sair do CCB ADM
           .right-nav.hidden-xs.col-sm-8.col-md-9(ng-click='menuOpened = null')

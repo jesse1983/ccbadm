@@ -13,7 +13,7 @@ angular
               defer.resolve("OK")
             else
               prompt
-                title: 'Acesso negado',
+                title: 'Acesso negado'
                 message: 'Desculpe, mas você não tem permissão para acessar esse link'
               defer.reject "Cannot"
         defer.promise
@@ -68,6 +68,7 @@ angular
       templateUrl: view_path('requests','request')
       controller: 'RequestController'
       controllerAs: 'vm'
+
     .when '/users',
       templateUrl: view_path('users','users')
       controller: 'UsersController'
@@ -83,5 +84,10 @@ angular
       controller: 'UserController'
       controllerAs: 'vm'
       resolve: cancan("create","User")
+
+    .when '/profiles',
+      template: '<profiles-controller />'
+      # resolve: cancan("show","Profile")
+
     .when '/',{redirectTo: "/properties"}
 ]

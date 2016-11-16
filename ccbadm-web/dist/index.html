@@ -86,6 +86,7 @@
               <li><a href="/#/properties" ng-click="menuOpened = null">Imóveis</a></li>
               <li><a href="/#/requests" ng-click="menuOpened = null">Retiradas</a></li>
               <li ng-show="$root.can('read','User')"><a href="/#/users" ng-click="menuOpened = null">Usuários</a></li>
+              <li ng-show="$root.can('read','Profile')"><a href="/#/profiles" ng-click="menuOpened = null">Perfis de acesso</a></li>
               <li><a href="/#/logout" ng-click="menuOpened = null">Sair do CCB ADM</a></li>
             </ul>
           </nav>
@@ -156,11 +157,14 @@
   <script src="factory/api_factory.js"></script>
   <script src="factory/cache_factory.js"></script>
   <script src="services/document_service.js"></script>
+  <script src="services/profile_service.js"></script>
+  <script src="services/skill_service.js"></script>
   <script src="controllers/login/login_controller.js"></script>
   <script src="controllers/logout/logout_controller.js"></script>
   <script src="controllers/partials/head_controller.js"></script>
   <script src="controllers/partials/nav_controller.js"></script>
   <script src="controllers/patrimony/patrimony_controller.js"></script>
+  <script src="controllers/profiles/profiles_controller.js"></script>
   <script src="controllers/properties/print_property_controller.js"></script>
   <script src="controllers/properties/properties_controller.js"></script>
   <script src="controllers/properties/property_controller.js"></script>

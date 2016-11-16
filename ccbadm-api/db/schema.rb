@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805203901) do
+ActiveRecord::Schema.define(version: 20161115193143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attachments", force: :cascade do |t|
     t.string   "attachment",      limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  precision: 6
+    t.datetime "updated_at",                  precision: 6
     t.integer  "attachable_id"
     t.string   "attachable_type", limit: 255
   end
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20160805203901) do
     t.string   "bras_code",     limit: 510
     t.string   "heritage_code", limit: 510
     t.string   "2000_code",     limit: 510
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                precision: 6
+    t.datetime "updated_at",                precision: 6
     t.integer  "group_id"
     t.string   "picture",       limit: 255
   end
@@ -42,9 +42,9 @@ ActiveRecord::Schema.define(version: 20160805203901) do
     t.integer  "commentable_id"
     t.text     "text"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_archived",      default: false
+    t.datetime "created_at",       precision: 6
+    t.datetime "updated_at",       precision: 6
+    t.boolean  "is_archived",                    default: false
   end
 
   create_table "document_types", force: :cascade do |t|
@@ -61,19 +61,19 @@ ActiveRecord::Schema.define(version: 20160805203901) do
 
   create_table "documents", force: :cascade do |t|
     t.integer  "document_type_id"
-    t.datetime "expires_at"
+    t.datetime "expires_at",                        precision: 6
     t.boolean  "is_possible"
     t.boolean  "is_active"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                        precision: 6
+    t.datetime "updated_at",                        precision: 6
     t.integer  "documentable_id"
     t.string   "documentable_type",     limit: 255
-    t.integer  "attachments_count",                 default: 0
+    t.integer  "attachments_count",                               default: 0
     t.string   "number",                limit: 255
-    t.datetime "issue_date"
+    t.datetime "issue_date",                        precision: 6
     t.integer  "active_requests_count"
     t.string   "status_id"
-    t.integer  "comments_count",                    default: 0
+    t.integer  "comments_count",                                  default: 0
   end
 
   add_index "documents", ["document_type_id"], name: "index_documents_on_document_type_id", using: :btree
@@ -86,8 +86,8 @@ ActiveRecord::Schema.define(version: 20160805203901) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "name",        limit: 510
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              precision: 6
+    t.datetime "updated_at",              precision: 6
     t.boolean  "is_readonly"
     t.integer  "group_id"
     t.integer  "lft"
@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 20160805203901) do
   create_table "groups_users", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "imports", force: :cascade do |t|
@@ -140,16 +140,16 @@ ActiveRecord::Schema.define(version: 20160805203901) do
   create_table "profiles", force: :cascade do |t|
     t.string   "name",       limit: 510
     t.boolean  "is_admin"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             precision: 6
+    t.datetime "updated_at",             precision: 6
     t.integer  "level"
   end
 
   create_table "profiles_skills", force: :cascade do |t|
     t.integer  "profile_id"
     t.integer  "skill_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "properties", force: :cascade do |t|
@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 20160805203901) do
     t.string   "group_code",        limit: 255
     t.string   "accountant_code",   limit: 255
     t.string   "cartographic_code", limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    precision: 6
+    t.datetime "updated_at",                    precision: 6
     t.boolean  "is_active",                                              default: true
     t.boolean  "has_church",                                             default: false
     t.decimal  "market_price",                  precision: 10, scale: 2
@@ -195,17 +195,17 @@ ActiveRecord::Schema.define(version: 20160805203901) do
   add_index "properties", ["church_id"], name: "index_properties_on_church_id", using: :btree
 
   create_table "requests", force: :cascade do |t|
-    t.datetime "requested_at"
-    t.datetime "returned_at"
-    t.datetime "return_in"
+    t.datetime "requested_at",           precision: 6
+    t.datetime "returned_at",            precision: 6
+    t.datetime "return_in",              precision: 6
     t.boolean  "is_active"
     t.integer  "user_id"
     t.text     "requestable_type"
     t.integer  "requestable_id"
     t.text     "requester"
     t.text     "requester_phone_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             precision: 6
+    t.datetime "updated_at",             precision: 6
     t.string   "requester_church"
     t.text     "comment"
     t.json     "meta"
@@ -216,49 +216,49 @@ ActiveRecord::Schema.define(version: 20160805203901) do
     t.string   "model",       limit: 510
     t.string   "name_pt_br",  limit: 510
     t.string   "model_pt_br", limit: 510
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              precision: 6
+    t.datetime "updated_at",              precision: 6
   end
 
   create_table "skills_users", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "skill_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
   end
 
   create_table "statuses", primary_key: "uid", force: :cascade do |t|
-    t.string   "statusable_type", null: false
-    t.string   "title",           null: false
+    t.string   "statusable_type",               null: false
+    t.string   "title",                         null: false
     t.string   "color"
     t.boolean  "is_active"
     t.string   "description"
     t.integer  "order"
     t.json     "meta"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      precision: 6
+    t.datetime "updated_at",      precision: 6
   end
 
   create_table "tokens", force: :cascade do |t|
     t.string   "token",      limit: 255
     t.integer  "user_id"
-    t.datetime "expire_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "expire_at",              precision: 6
+    t.datetime "created_at",             precision: 6
+    t.datetime "updated_at",             precision: 6
   end
 
   add_index "tokens", ["token"], name: "index_tokens_on_token", using: :btree
   add_index "tokens", ["user_id"], name: "index_tokens_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 510, default: "", null: false
-    t.string   "encrypted_password",     limit: 510, default: "", null: false
+    t.string   "email",                  limit: 510,               default: "", null: false
+    t.string   "encrypted_password",     limit: 510,               default: "", null: false
     t.string   "reset_password_token",   limit: 510
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "reset_password_sent_at",             precision: 6
+    t.datetime "remember_created_at",                precision: 6
+    t.integer  "sign_in_count",                                    default: 0,  null: false
+    t.datetime "current_sign_in_at",                 precision: 6
+    t.datetime "last_sign_in_at",                    precision: 6
     t.string   "current_sign_in_ip",     limit: 510
     t.string   "last_sign_in_ip",        limit: 510
     t.integer  "group_id"
@@ -269,22 +269,19 @@ ActiveRecord::Schema.define(version: 20160805203901) do
     t.string   "last_name",              limit: 510
   end
 
-  add_index "users", ["email"], name: "users_email_key", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "users_reset_password_token_key", unique: true, using: :btree
-
   create_table "versions", force: :cascade do |t|
-    t.string   "item_type",  limit: 510, null: false
-    t.integer  "item_id",                null: false
-    t.string   "event",      limit: 510, null: false
+    t.string   "item_type",  limit: 510,               null: false
+    t.integer  "item_id",                              null: false
+    t.string   "event",      limit: 510,               null: false
     t.string   "whodunnit",  limit: 510
     t.text     "object"
-    t.datetime "created_at"
+    t.datetime "created_at",             precision: 6
   end
 
   create_table "voltages", force: :cascade do |t|
     t.string   "name",       limit: 100
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             precision: 6
+    t.datetime "updated_at",             precision: 6
   end
 
 end

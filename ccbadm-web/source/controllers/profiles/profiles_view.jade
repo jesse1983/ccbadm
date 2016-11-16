@@ -1,0 +1,26 @@
+.container-fluid(ng-if="vm.skills")
+	h1 Perfis
+	form
+		table.table(style="table-layout: fixed;")
+			thead
+				tr
+					th(width="150px") Perfil
+					th(ng-repeat="skill in vm.skill_names" width="{{ 100/vm.skills.length }}%")
+						div(style="overflow: hidden" ng-bind="skill")
+					th(width="150px")
+
+			tbody
+				tr(ng-repeat="profile in vm.profiles")
+					th(ng-bind="profile.name")
+						td(ng-repeat="skill in vm.skill_names")
+							.btn-group
+								button.btn.btn-success.dropdown-toggle(type='button' data-toggle='dropdown')
+									| Large
+									span.caret
+
+						td
+							a(href) ver usuários
+	//- div(ng-bind="vm.skills | json")
+	.text-center
+		hr
+		a.btn.btn-lg.btn-success(href) Salvar

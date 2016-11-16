@@ -79,6 +79,8 @@ angular.module('CCBApp').config([
       controller: 'UserController',
       controllerAs: 'vm',
       resolve: cancan("create", "User")
+    }).when('/profiles', {
+      template: '<profiles-controller />'
     }).when('/', {
       redirectTo: "/properties"
     });

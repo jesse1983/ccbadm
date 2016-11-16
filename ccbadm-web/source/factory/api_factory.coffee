@@ -37,8 +37,8 @@ angular
 					headers: headers
 					interceptor: interceptor
 					method:'DELETE'
-					params: { id: "@id" }
-					method: "DELETE"
+					params:
+						id: "@id"
 					isArray: false
 			}
 		methods =
@@ -52,6 +52,7 @@ angular
 			Property: -> $resource("#{source}/properties/:id", {id: '@id'}, config(false))
 			Profile: -> $resource("#{source}/profiles/:id", {id: '@id'}, config(true))
 			Request: -> $resource("#{source}/requests/:id", {id: '@id'}, config(false))
+			Skill: -> $resource("#{source}/skills/:id", {id: '@id'}, config(true))
 			Status: -> $resource("#{source}/statuses/:id", {id: '@id'}, config(true))
 			Comment: -> $resource("#{source}/comments/:id", {id: '@id'}, config(false))
 			User: -> $resource("#{source}/users/:id", {id: '@id'}, config(false))
