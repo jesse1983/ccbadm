@@ -2,7 +2,7 @@ var env, yml;
 
 yml = {
   development: {
-    API_URL: "http://docker:3000"
+    API_URL: "http://localhost:3000"
   },
   production: {
     API_URL: "http://ec2-52-67-130-62.sa-east-1.compute.amazonaws.com:3000"

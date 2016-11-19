@@ -1,26 +1,47 @@
 .container-fluid(ng-if="vm.skills")
-	h1 Perfis
+	hr
 	form
 		table.table(style="table-layout: fixed;")
 			thead
 				tr
-					th(width="150px") Perfil
-					th(ng-repeat="skill in vm.skill_names" width="{{ 100/vm.skills.length }}%")
+					th(width="80px") Perfil
+					th(ng-repeat="skill in vm.skill_names" width="{{ 90/vm.skills.length }}%")
 						div(style="overflow: hidden" ng-bind="skill")
-					th(width="150px")
+					//- th(width="150px")
 
 			tbody
 				tr(ng-repeat="profile in vm.profiles")
 					th(ng-bind="profile.name")
 						td(ng-repeat="skill in vm.skill_names")
-							.btn-group
-								button.btn.btn-success.dropdown-toggle(type='button' data-toggle='dropdown')
-									| Large
+							dropdown
+								button(
+									type='button' 
+									data-toggle='dropdown' 
+									class="btn dropdown-toggle btn-{{vm.classSkill(profile.skills, skill)}}"
+								)
+									| {{vm.labelSkill(profile.skills, skill)}}
 									span.caret
-
-						td
-							a(href) ver usuários
+								ul.dropdown-menu(role="menu")
+									li
+										a(href="" ng-click="vm.setSkill(profile, skill, 'manage')") 
+											i.fa.fa-circle.text-success
+											| &nbsp;
+											| Gerenciar
+										a(href="" ng-click="vm.setSkill(profile, skill, 'show')")
+											i.fa.fa-circle
+											| &nbsp;
+											| Somente ler											
+										a(href="" ng-click="vm.setSkill(profile, skill)")
+											i.fa.fa-circle.text-muted
+											| &nbsp;
+											| Nenhum acesso	
+			tfoot
+				tr
+					th(colspan="{{ vm.skill_names.length + 1 }}")
+						//- td
+						//- 	a(href) ver usuários
 	//- div(ng-bind="vm.skills | json")
 	.text-center
 		hr
-		a.btn.btn-lg.btn-success(href) Salvar
+		a.btn.btn-lg.btn-link(href="" ng-click="vm.reset()" ng-show="vm.changed()") Voltar tudo
+		a.btn.btn-lg.btn-success(href="" ng-click="vm.save()" ng-disabled="!vm.changed()") Salvar

@@ -38,7 +38,7 @@ services:
     restart: always
   web:
     image: jesse1983/ccbadm-web:latest
-    command: npm start
+    command: bash -c "npm i && npm start"
     container_name: ccbadm-web
     volumes:
       - ./ccbadm-web/:/app
