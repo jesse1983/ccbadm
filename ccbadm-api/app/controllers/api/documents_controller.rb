@@ -4,6 +4,7 @@ class Api::DocumentsController < Api::ApiController
 	respond_to :json,:xml
 
 	def index
+		authorize! :show, Document
 		ransacklize params, "property_id", "documentable"
 		@q = Document.search params
 		# render text: @q.result.to_sql
@@ -11,6 +12,7 @@ class Api::DocumentsController < Api::ApiController
 		@data = @q.result.includes(:document_type).limit(@limit).offset(@offset).order("document_types.order")
 	end
 	def show
+		authorize! :show, Document
 		begin
 			@object = Document.find params[:id]
 		rescue
@@ -18,6 +20,7 @@ class Api::DocumentsController < Api::ApiController
 		end
 	end
 	def create
+		authorize! :create, Document
 		@object = Document.new get_params
 		if @object.save
 			render :template => "api/#{controller_name}/show"
@@ -27,6 +30,7 @@ class Api::DocumentsController < Api::ApiController
 	end
 	def update
 		@object = Document.find params[:id]
+		authorize! :update, @object
 		if @object.update get_params
 			render :template => "api/#{controller_name}/show"
 		else

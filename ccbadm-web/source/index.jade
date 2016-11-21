@@ -24,20 +24,23 @@ html(ng-app='CCBApp')
               button.close(ng-click='menuOpened = null', type='button')
                 span ×
               span(ng-bind="$root.login.first_name + ' ' + $root.login.last_name")
+
             ul.nav
-              li
-                a(href='/#/properties', ng-click='menuOpened = null') Imóveis
-              li
-                a(href='/#/requests', ng-click='menuOpened = null') Retiradas
+              li(ng-show="$root.can('show','Property')")
+                a(href='/#/properties' ng-click='menuOpened = null') Imóveis
 
-              li(ng-show="$root.can('read','User')")
-                a(href='/#/users', ng-click='menuOpened = null') Usuários
+              li(ng-show="$root.can('show','Request')")
+                a(href='/#/requests' ng-click='menuOpened = null') Retiradas
 
-              li(ng-show="$root.can('read','Profile')")
-                a(href='/#/profiles', ng-click='menuOpened = null') Perfis de acesso
+              li(ng-show="$root.can('show','User')")
+                a(href='/#/users' ng-click='menuOpened = null') Usuários
+
+              li(ng-show="$root.can('show','Profile')")
+                a(href='/#/profiles' ng-click='menuOpened = null') Perfis de acesso
 
               li
-                a(href='/#/logout', ng-click='menuOpened = null') Sair do CCB ADM
+                a(href='/#/logout' ng-click='menuOpened = null') Sair do CCB ADM
+
           .right-nav.hidden-xs.col-sm-8.col-md-9(ng-click='menuOpened = null')
     header.horizontal.hidden-print(ng-show='$root.login')
       nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')

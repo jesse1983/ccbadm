@@ -4,12 +4,14 @@ class Api::RequestsController < Api::ApiController
 	respond_to :json,:xml
 
 	def index
+		authorize! :show, Request
 		ransacklize params, "document_id", "requestable"
 		@q = Request.search params
 		@total, @limit, @offset = header(@q.result)
 		@data = @q.result.limit(@limit).offset(@offset)
 	end
 	def show
+		authorize! :show, Request
 		begin
 			@object = Request.find params[:id]
 		rescue
@@ -17,6 +19,7 @@ class Api::RequestsController < Api::ApiController
 		end
 	end
 	def create
+		authorize! :create, Request
 		@object = Request.new get_params
 		@object.user_id = @current_user.id
 		if @object.save
@@ -29,6 +32,7 @@ class Api::RequestsController < Api::ApiController
 	end
 	def update
 		@object = Request.find params[:id]
+		authorize! :update, @object
 		if @object.update get_params
 			render :template => "api/#{controller_name}/show"
 		else
@@ -37,6 +41,7 @@ class Api::RequestsController < Api::ApiController
 	end
 	def destroy
 		@object = Request.find params[:id]
+		authorize! :destroy, @object
 		if @object.destroy
 			render(:json => {destroy: true}, :status => 200)
 		else

@@ -52,7 +52,7 @@ angular
       templateUrl: view_path('properties','property')
       controller: 'PropertyController'
       controllerAs: 'vm'
-      resolve: cancan("show","Property")
+      resolve: cancan("show","Document")
       reloadOnSearch: false
 
     # .when '/properties/:property_id/documents/:id',
@@ -64,21 +64,26 @@ angular
       templateUrl: view_path('requests','requests')
       controller: 'RequestsController'
       controllerAs: 'vm'
+      resolve: cancan("show","Request")
+
     .when '/requests/new',
       templateUrl: view_path('requests','request')
       controller: 'RequestController'
       controllerAs: 'vm'
+      resolve: cancan("show","Request")
 
     .when '/users',
       templateUrl: view_path('users','users')
       controller: 'UsersController'
       controllerAs: 'vm'
       resolve: cancan("show","User")
+
     .when '/users/:id',
       templateUrl: view_path('users','user')
       controller: 'UserController'
       controllerAs: 'vm'
       resolve: cancan("show","User")
+
     .when '/users/new',
       templateUrl: view_path('users','user')
       controller: 'UserController'
@@ -87,6 +92,7 @@ angular
 
     .when '/profiles',
       template: '<profiles-controller />'
+      resolve: cancan("show","Profile")
       # resolve: cancan("show","Profile")
 
     .when '/',{redirectTo: "/properties"}

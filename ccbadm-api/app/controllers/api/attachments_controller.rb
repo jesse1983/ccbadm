@@ -5,12 +5,14 @@ class Api::AttachmentsController < Api::ApiController
 
 
 	def index
+		authorize! :show, Attachment
 		ransacklize params, "document_id", "attachable"
 		@q = Attachment.search params
 		@total, @limit, @offset = header(@q.result)
 		@data = @q.result.limit(@limit).offset(@offset)
 	end
 	def show
+		authorize! :show, Attachment
 		begin
 			@object = Attachment.find params[:id]
 		rescue
@@ -18,6 +20,7 @@ class Api::AttachmentsController < Api::ApiController
 		end
 	end
 	def create
+		authorize! :create, Attachment
 		@object = Attachment.new get_params
 		if @object.save
 			# Attachment.where("attachable_id = ? and attachable_type = ? AND id != ?",@object.attachable_id,@object.attachable_type,@object.id).delete_all
@@ -30,6 +33,7 @@ class Api::AttachmentsController < Api::ApiController
 	end
 	def update
 		@object = Attachment.find params[:id]
+		authorize! :update, @object
 		if @object.update get_params
 			render :template => "api/#{controller_name}/show"
 		else
@@ -39,6 +43,7 @@ class Api::AttachmentsController < Api::ApiController
 	end
 	def destroy
 		@object = Attachment.find params[:id]
+		authorize! :destroy, @object
 		if @object.destroy
 			render(:json => {destroy: true}, :status => 200)
 		else

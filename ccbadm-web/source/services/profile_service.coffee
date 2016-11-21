@@ -11,6 +11,10 @@ class ProfileService
 			deferred.reject error
 		return deferred.promise
 
+	update: (profile)->
+		@ApiFactory.Profile().update({ id: profile.id }, profile)
+
+
 
 ProfileService.$inject = ['$q', 'CacheFactory', 'ApiFactory']
 

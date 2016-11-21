@@ -8,6 +8,7 @@ module Api
 		caches_action :show, :cache_path => Proc.new { |c| c.params }
 
 		def index
+			authorize! :show, Property
 			if params.key?(:church_id)
 				params[:church_id_eq] = params[:church_id]
 				params.delete(:church_id)
@@ -17,6 +18,7 @@ module Api
 			@data = @q.result.includes(:documents,:church).limit(@limit).offset(@offset).order(is_active: :desc, title: :asc)
 		end
 		def show
+			authorize! :show, Property
 			@object = Property.find params[:id]
 		end
 

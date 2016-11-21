@@ -65,7 +65,7 @@
 					i.fa.fa-comments-o
 					|  Comentários
 				.form-group
-						form(name="formComment" novalidate="" ng-submit="vm.AddComment(vm.comment, vm.document)")
+						form(name="formComment" novalidate="" ng-submit="vm.AddComment(vm.comment, vm.document)" ng-if="vm.Can('manage', 'Document')")
 							textarea.form-control(ng-model="vm.comment.text" rows="4" placeholder="Insira aqui seu comentário" required="" ng-disabled="vm.loading_comment")
 							.pull-right
 								button.btn.btn-default(type="submit" ng-show="formComment.$valid" ng-disabled="loading_comment") Enviar
@@ -82,18 +82,18 @@
 								p
 									i.fa.fa-comment
 									span(ng-bind="' ' + comment.text")
-								.pull-right
+								.pull-right(ng-if="vm.Can('manage', 'Document')")
 									.btn-group
 										small
 											a.btn.btn-link(href="" ng-click="vm.DeleteComment(comment, vm.document)") Excluir
 
 		.col-sm-4.col-xs-12.blocker
-			.section
+			.section(ng-if="vm.Can('show','Attachment')")
 				.legend
 					i.fa.fa-paperclip
 					|  Digitalização
 				.form-group
-					div(ng-show="vm.document.attachments.length < 1 && $root.can('create','Attachment')")
+					div(ng-show="vm.document.attachments.length < 1 && vm.Can('manage','Attachment')")
 						.drop-box.palette.palette-clouds(
 							ngf-drop='vm.Upload($files)'
 							ngf-select='vm.Upload($files)'
@@ -122,6 +122,7 @@
 							ngf-validate="{size: {min: 10, max: '5MB'}"
 							ngf-validate-fn="vm.ValidateUpload($files)"
 							ng-disabled="vm.upl"
+							ng-if="vm.Can('manage','Attachment')"
 						)
 							span(ng-show='!vm.upl') Enviar mais
 							span(ng-show='vm.upl') Enviando...
@@ -134,11 +135,11 @@
 						div(ng-repeat='attachment in vm.document.attachments' ng-show="attachment.current")
 							img.img-responsive.img-rounded(cloudinary='w_400,h_500,c_fill', cl-src='{{attachment.attachment}}', height='500')
 							a.btn.btn-link(href='{{attachment.attachment}}', download='') Download
-							button.btn.btn-link(ng-click='vm.DestroyAttach(attachment)', ng-show="$root.can('destroy','Attachment')") Excluir
+							button.btn.btn-link(ng-click='vm.DestroyAttach(attachment)', ng-show="vm.Can('manage','Attachment')") Excluir
 
 
 
 .modal-footer
-	button.btn.btn-danger(type='button', ng-click='vm.RemoveDocument(vm.document)' ng-if="vm.isAutoStatus(vm.document) && vm.document.attachments < 1") Marcar como ausente
-	button.btn.btn-default(type='button', ng-click='vm.ModalCancel()') Fechar
-	button.btn.btn-success(type='button', ng-click='vm.SaveDocument(vm.document)' ng-disabled="vm.saving || vm.upl") Salvar
+	button.btn.btn-danger(type='button' ng-click='vm.RemoveDocument(vm.document)' ng-if="vm.isAutoStatus(vm.document) && vm.document.attachments < 1") Marcar como ausente
+	button.btn.btn-default(type='button' ng-click='vm.ModalCancel()') Fechar
+	button.btn.btn-success(type='button' ng-click='vm.SaveDocument(vm.document)' ng-disabled="vm.saving || vm.upl" ng-if="vm.Can('manage','Document')") Salvar

@@ -62,17 +62,16 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+
   def all_skills
-    all = []
-    if self.is_admin?
-      Skill.all.each{|m| all.push m}
+    if self.profile.is_admin
+      Skill.all()
     else
-      self.skills.each{|m| all.push m}
-      self.profile.skills.map{|m| all.push m}
+      # self.skills.each{|m| all.push m}
+      self.profile.skills
     end
-    # ps = self.profile.skills
-    all
   end
+
   def grouped_skills
     group = []
     models = self.all_skills().group_by {|s| s[:model] }

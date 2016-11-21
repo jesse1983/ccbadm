@@ -1,8 +1,10 @@
 var ProfilesController;
 
 ProfilesController = (function() {
-  function ProfilesController($rootScope, ProfileService, SkillService) {
-    ProfileService.all().then((function(_this) {
+  function ProfilesController(q, $rootScope, ProfileService, SkillService) {
+    this.q = q;
+    this.ProfileService = ProfileService;
+    this.ProfileService.all().then((function(_this) {
       return function(profiles) {
         return SkillService.all().then(function(skills) {
           _this.skills = _.sortBy(skills.data, 'model_pt_br');
@@ -121,20 +123,36 @@ ProfilesController = (function() {
   };
 
   ProfilesController.prototype.save = function() {
-    var changed;
-    changed = this.profiles.filter((function(_this) {
+    var deferred, i, len, profile, profiles, promises;
+    this.loading = true;
+    deferred = this.q.defer();
+    promises = [];
+    profiles = this.profiles.filter((function(_this) {
       return function(m) {
         return !_this.compare(m);
       };
     })(this));
-    return console.log(changed);
+    for (i = 0, len = profiles.length; i < len; i++) {
+      profile = profiles[i];
+      profile.skill_ids = profile.skills.map(function(s) {
+        return s.id;
+      }).join(',');
+      promises.push(this.ProfileService.update(profile));
+    }
+    this.q.all(promises).then((function(_this) {
+      return function(result) {
+        _this.loading = false;
+        return _this.history = angular.copy(_this.profiles);
+      };
+    })(this));
+    return deferred.promise;
   };
 
   return ProfilesController;
 
 })();
 
-ProfilesController.$inject = ['$rootScope', 'ProfileService', 'SkillService'];
+ProfilesController.$inject = ['$q', '$rootScope', 'ProfileService', 'SkillService'];
 
 angular.module('CCBApp').component('profilesController', {
   templateUrl: 'controllers/profiles/profiles_view.html',

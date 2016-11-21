@@ -18,7 +18,7 @@ const src      = './source';
 const dist     = './dist';
 const build    = './public';
 
-gulp.task('default',()=> run('clean:dist',['coffee','jade','sass','copy:remain','copy:components'],'inject'));
+gulp.task('default',()=> run('clean:dist',['coffee','jade','sass'],['copy:remain','copy:components'],'inject'));
 
 gulp.task('build',()=> run('clean:build','rev','copy:build'));
 

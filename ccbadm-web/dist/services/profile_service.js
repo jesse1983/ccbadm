@@ -26,6 +26,12 @@ ProfileService = (function() {
     return deferred.promise;
   };
 
+  ProfileService.prototype.update = function(profile) {
+    return this.ApiFactory.Profile().update({
+      id: profile.id
+    }, profile);
+  };
+
   return ProfileService;
 
 })();

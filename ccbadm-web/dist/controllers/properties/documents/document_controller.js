@@ -25,6 +25,11 @@ DocumentController = (function() {
     })(this), this.SetExpiresAt);
   }
 
+  DocumentController.prototype.Can = function(action, resource) {
+    console.log(action, resource, this.rootScope.can(action, resource));
+    return this.rootScope.can(action, resource);
+  };
+
   DocumentController.prototype.GetExpiresAt = function() {
     var date, e;
     try {

@@ -3,21 +3,25 @@ class Api::ChurchesController < Api::ApiController
 	skip_before_filter :authenticate_user!
 	respond_to :json,:xml
 
-
 	def index
+		authorize! :show, Church
 		@q = Church.search params
 		@total, @limit, @offset = header(@q.result)
 		@data = @q.result.order(:name).limit(@limit).offset(@offset)
 	end
+
 	def show
+		authorize! :show, Church
 		begin
 			@object = Church.find params[:id]
 		rescue
 			render(:json => {error: "Not found"}, :status => 404)
 		end
 	end
+	
 	def update
 		@object = Church.find params[:id]
+		authorize! :update, @object
 		if @object.update get_params
 			render :template => "api/#{controller_name}/show"
 		else

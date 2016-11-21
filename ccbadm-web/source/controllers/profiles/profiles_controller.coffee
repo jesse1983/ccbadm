@@ -1,6 +1,6 @@
 class ProfilesController
-	constructor: ($rootScope, ProfileService, SkillService) ->
-		ProfileService.all().then (profiles) =>
+	constructor: (@q, $rootScope, @ProfileService, SkillService) ->
+		@ProfileService.all().then (profiles) =>
 			SkillService.all().then (skills) =>
 				@skills = _.sortBy skills.data, 'model_pt_br'
 				@skill_names = @getSkills(@skills)
@@ -9,6 +9,7 @@ class ProfilesController
 		$rootScope.nav =
 			current:
 				title: "Perfis"
+		# @loading = true
 
 	getSkills: (skills) ->
 		map = skills.map (s) -> s.model_pt_br
@@ -67,11 +68,20 @@ class ProfilesController
 		@profiles = angular.copy(@history)
 
 	save: ->
-		changed = @profiles.filter (m) => 
+		@loading = true
+		deferred = @q.defer()
+		promises = []
+		profiles = @profiles.filter (m) => 
 			!@compare(m)
-		console.log changed
+		for profile in profiles
+			profile.skill_ids = profile.skills.map((s) -> s.id).join(',')
+			promises.push @ProfileService.update(profile)
+		@q.all(promises).then (result) =>
+			@loading = false
+			@history = angular.copy @profiles
+		deferred.promise
 
-ProfilesController.$inject = ['$rootScope', 'ProfileService', 'SkillService']
+ProfilesController.$inject = ['$q', '$rootScope', 'ProfileService', 'SkillService']
 
 angular
 	.module('CCBApp')

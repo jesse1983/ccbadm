@@ -35,7 +35,7 @@ class Ability
             can :manage, :all
         else
             user.all_skills.each do |skill|
-                can skill.name, skill.model
+                can skill.name.to_sym, skill.model.constantize
             end
         end
     end

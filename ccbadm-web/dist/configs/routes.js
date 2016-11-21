@@ -54,16 +54,18 @@ angular.module('CCBApp').config([
       templateUrl: view_path('properties', 'property'),
       controller: 'PropertyController',
       controllerAs: 'vm',
-      resolve: cancan("show", "Property"),
+      resolve: cancan("show", "Document"),
       reloadOnSearch: false
     }).when('/requests', {
       templateUrl: view_path('requests', 'requests'),
       controller: 'RequestsController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      resolve: cancan("show", "Request")
     }).when('/requests/new', {
       templateUrl: view_path('requests', 'request'),
       controller: 'RequestController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      resolve: cancan("show", "Request")
     }).when('/users', {
       templateUrl: view_path('users', 'users'),
       controller: 'UsersController',
@@ -80,7 +82,8 @@ angular.module('CCBApp').config([
       controllerAs: 'vm',
       resolve: cancan("create", "User")
     }).when('/profiles', {
-      template: '<profiles-controller />'
+      template: '<profiles-controller />',
+      resolve: cancan("show", "Profile")
     }).when('/', {
       redirectTo: "/properties"
     });

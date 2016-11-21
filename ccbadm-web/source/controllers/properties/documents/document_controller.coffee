@@ -28,6 +28,9 @@ class DocumentController
 			@unformatted
 		, @SetExpiresAt
 
+	Can: (action, resource)->
+		console.log action, resource, @rootScope.can(action, resource)
+		@rootScope.can action, resource
 
 	GetExpiresAt: ->
 		try

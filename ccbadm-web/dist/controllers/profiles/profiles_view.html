@@ -36,7 +36,8 @@
       </tfoot>
     </table>
   </form>
-  <div class="text-center">
+  <div ng-if="!vm.loading" class="text-center">
     <hr/><a href="" ng-click="vm.reset()" ng-show="vm.changed()" class="btn btn-lg btn-link">Voltar tudo</a><a href="" ng-click="vm.save()" ng-disabled="!vm.changed()" class="btn btn-lg btn-success">Salvar</a>
   </div>
+  <div ng-if="vm.loading" class="text-center">Aguarde</div>
 </div>
