@@ -72,9 +72,10 @@
               <button ng-click="menuOpened = null" type="button" class="close"><span>×</span></button><span ng-bind="$root.login.first_name + ' ' + $root.login.last_name"></span>
             </div>
             <ul class="nav">
-              <li><a href="/#/properties" ng-click="menuOpened = null">Imóveis</a></li>
-              <li><a href="/#/requests" ng-click="menuOpened = null">Retiradas</a></li>
-              <li ng-show="$root.can('read','User')"><a href="/#/users" ng-click="menuOpened = null">Usuários</a></li>
+              <li ng-show="$root.can('show','Property')"><a href="/#/properties" ng-click="menuOpened = null">Imóveis</a></li>
+              <li ng-show="$root.can('show','Request')"><a href="/#/requests" ng-click="menuOpened = null">Retiradas</a></li>
+              <li ng-show="$root.can('show','User')"><a href="/#/users" ng-click="menuOpened = null">Usuários</a></li>
+              <li ng-show="$root.can('show','Profile')"><a href="/#/profiles" ng-click="menuOpened = null">Perfis de acesso</a></li>
               <li><a href="/#/logout" ng-click="menuOpened = null">Sair do CCB ADM</a></li>
             </ul>
           </nav>
@@ -110,6 +111,6 @@
     </header>
     <div ng-view="" class="content nga-fast nga-stagger nga-squash-left"></div>
   </body>
-  <script src="js/build-d50ad86fa4.js"></script>
+  <script src="js/build-7b87b50403.js"></script>
   
 </html>

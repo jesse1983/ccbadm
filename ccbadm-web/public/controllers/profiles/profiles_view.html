@@ -1,0 +1,43 @@
+
+<div ng-if="vm.skills" class="container-fluid">
+  <hr/>
+  <form>
+    <table style="table-layout: fixed;" class="table">
+      <thead>
+        <tr>
+          <th width="80px">Perfil</th>
+          <th ng-repeat="skill in vm.skill_names" width="{{ 90/vm.skills.length }}%">
+            <div style="overflow: hidden" ng-bind="skill"></div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="profile in vm.profiles">
+          <th ng-bind="profile.name">
+            <td ng-repeat="skill in vm.skill_names">
+              <dropdown>
+                <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-{{vm.classSkill(profile.skills, skill)}}">{{vm.labelSkill(profile.skills, skill)}}<span class="caret"></span></button>
+                <ul role="menu" class="dropdown-menu">
+                  <li><a href="" ng-click="vm.setSkill(profile, skill, 'manage')"> <i class="fa fa-circle text-success"></i>&nbsp;
+                      Gerenciar</a><a href="" ng-click="vm.setSkill(profile, skill, 'show')"><i class="fa fa-circle"></i>&nbsp;
+                      Somente ler											</a><a href="" ng-click="vm.setSkill(profile, skill)"><i class="fa fa-circle text-muted"></i>&nbsp;
+                      Nenhum acesso	</a></li>
+                </ul>
+              </dropdown>
+            </td>
+          </th>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="{{ vm.skill_names.length + 1 }}">
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </form>
+  <div ng-if="!vm.loading" class="text-center">
+    <hr/><a href="" ng-click="vm.reset()" ng-show="vm.changed()" class="btn btn-lg btn-link">Voltar tudo</a><a href="" ng-click="vm.save()" ng-disabled="!vm.changed()" class="btn btn-lg btn-success">Salvar</a>
+  </div>
+  <div ng-if="vm.loading" class="text-center">Aguarde</div>
+</div>
