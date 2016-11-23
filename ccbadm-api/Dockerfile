@@ -8,5 +8,4 @@ ADD Gemfile $APP_HOME/Gemfile
 ADD Gemfile.lock $APP_HOME/Gemfile.lock
 RUN gem install bundler
 RUN bundle install
-RUN rake db:migrate
 ADD . $APP_HOME
